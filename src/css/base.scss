@@ -1,0 +1,8 @@
+.no-hover-effect {
+  .q-checkbox__inner:before {
+    opacity: 0 !important;
+  }
+ .q-focus-helper {
+    opacity: 0 !important;
+  }
+}
