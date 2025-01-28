@@ -1,18 +1,27 @@
+const layouts = {
+  mainLayout: () => import('layouts/main-layout/main-layout'),
+  emptyLayout: () => import('layouts/empty-layout/empty-layout'),
+};
+
+const pages = {
+  loginPage: () => import('pages/login-page/login-page'),
+  signUpPage: () => import('pages/sign-up-page/sign-up-page'),
+  forgotPasswordPage: () => import('pages/forgot-password-page/forgot-password-page'),
+  resetPasswordPage: () => import('pages/reset-password-page/reset-password-page'),
+};
+
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    redirect: '/login',
+    component: layouts.emptyLayout,
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
-    ]
+      { path: '/login', component: pages.loginPage },
+      { path: '/sign_up', component: pages.signUpPage },
+      { path: '/forgot_password', component: pages.forgotPasswordPage },
+      { path: '/reset_password', component: pages.resetPasswordPage },
+    ],
   },
+];
 
-  // Always leave this as last one,
-  // but you can also remove it
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
-]
-
-export default routes
+export default routes;
