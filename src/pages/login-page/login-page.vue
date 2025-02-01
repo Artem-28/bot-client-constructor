@@ -49,6 +49,7 @@ import BaseField from 'components/base/base-field/base-field';
 
 const email = ref('');
 const password = ref('');
+
 </script>
 
 <style lang="scss" scoped>

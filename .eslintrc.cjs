@@ -53,7 +53,8 @@ module.exports = {
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'semi': ['error', 'always'],
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': ['error', { 'anonymous': 'never', "named": "never", "asyncArrow": "always" }],
+    'camelcase': 'off',
     'generator-star-spacing': 'off',
     'arrow-parens': 'off',
     'one-var': 'off',
