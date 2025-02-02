@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers';
 import axios from 'axios';
 import appConfig from 'src/app-config';
 import { useAuthStore } from 'src/stores';
+import useToken from 'src/api/use-token';
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -15,15 +16,26 @@ const api = axios.create({ baseURL: api_url });
 export default boot(({ app, router }) => {
   function errorHandler(error) {
     if (error.status === 401) {
+      const token = useToken();
       const authStore = useAuthStore();
+      token.remove();
       authStore.removeUser();
       router.push('/login');
     }
     throw error;
   }
 
+  function responseHandler(response) {
+    const { data: { data, path } } = response;
+    const token = useToken();
+    if (path && typeof path === 'string' && path.includes('sign-in')) {
+      token.update(data);
+    }
+    return response;
+  }
+
   api.interceptors.response.use(
-    response => response,
+    responseHandler,
     errorHandler,
   );
 

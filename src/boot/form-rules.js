@@ -17,7 +17,7 @@ function checkCode(payload) {
 
 function checkCodeValidator(type) {
   const params = ref(null);
-  const validator = validators.helpers.withAsync(async(value, form, ctx) => {
+  const validator = validators.helpers.withAsync(async (value, form, ctx) => {
     const isEmail = validators.email.$validator(ctx.form?.email, ctx.form, ctx);
     const isBetween = value.length === 6;
 

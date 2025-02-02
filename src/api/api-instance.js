@@ -1,4 +1,5 @@
 import { api } from 'boot/axios';
+import useToken from 'src/api/use-token';
 
 export default class ApiInstance {
   get headers() {
@@ -6,24 +7,27 @@ export default class ApiInstance {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     };
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      data.Authorization = `Bearer ${token}`;
+    const token = useToken();
+    const { valid, Authorization } = token.get();
+    if (valid) {
+      data.Authorization = Authorization;
     }
     return data;
   }
 
-  get(url, params) {
-    return api.get(url, {
+  async get(url, params) {
+    const { data } = await api.get(url, {
       params,
       headers: this.headers,
     });
+    return data;
   }
 
-  post(url, payload, params) {
-    return api.post(url, payload, {
+  async post(url, payload, params) {
+    const { data } = await api.post(url, payload, {
       params,
       headers: this.headers,
     });
+    return data;
   }
 }

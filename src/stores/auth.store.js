@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import api from 'src/api';
+import useApi from 'src/api';
 
 export const useAuthStore = defineStore('auth', () => {
+  const api = useApi();
   const user = ref(null);
 
   function removeUser() {
@@ -11,8 +12,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function setUser() {
     try {
-      const data = await api.getAuthUser();
-      console.log('USER', data);
+      const { data, success } = await api.getAuthUser();
+      removeUser();
+      if (success) user.value = data;
     } catch (e) {
       removeUser();
     }

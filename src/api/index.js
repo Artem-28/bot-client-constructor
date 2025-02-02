@@ -2,7 +2,7 @@ import ApiInstance from 'src/api/api-instance';
 
 class Api extends ApiInstance {
   signIn(payload) {
-    return this.post('api/v1/sign-in', payload);
+    return this.post('api/v1/auth/sign-in', payload);
   }
 
   async getAuthUser() {
@@ -10,4 +10,8 @@ class Api extends ApiInstance {
   }
 }
 
-export default new Api();
+const api = new Api();
+
+const useApi = () => api;
+
+export default useApi;

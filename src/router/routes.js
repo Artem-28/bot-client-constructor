@@ -19,8 +19,20 @@ const routes = [
     component: layouts.emptyLayout,
     children: [
       { path: '/test', component: pages.testPage },
-      { path: '/login', component: pages.loginPage },
-      { path: '/sign_up', component: pages.signUpPage },
+      {
+        path: '/login',
+        component: pages.loginPage,
+        meta: {
+          autoLogin: true,
+        },
+      },
+      {
+        path: '/sign_up',
+        component: pages.signUpPage,
+        meta: {
+          autoLogin: true,
+        },
+      },
       { path: '/forgot_password', component: pages.forgotPasswordPage },
       { path: '/reset_password', component: pages.resetPasswordPage },
     ],
