@@ -17,17 +17,26 @@ function checkCode(payload) {
 
 function checkCodeValidator(type) {
   const params = ref(null);
-  const validator = validators.helpers.withAsync(async(value, form) => {
-    if (value.length !== 6) return false;
+  const validator = validators.helpers.withAsync(async(value, form, ctx) => {
+    const isEmail = validators.email.$validator(ctx.form?.email, ctx.form, ctx);
+    const isBetween = value.length === 6;
+
+    if (!isEmail || !isBetween) return false;
     const payload = {
-      destination: form.email,
+      destination: ctx.form.email,
       type,
       code: value,
     };
+
     params.value = await checkCode(payload);
+
     return params.value.matched && params.value.live;
   });
   return validators.helpers.withParams({ type: 'data', value: params }, validator);
+}
+
+function sameAsPassword(value, form) {
+  return validators.sameAs(form.password).$validator(value);
 }
 
 const formRules = {
@@ -38,9 +47,6 @@ const formRules = {
   registrationCode: {
     $lazy: true,
     required: withI18nMessage(validators.required),
-    minLength: withI18nMessage(validators.minLength(6), {
-      messagePath: () => 'validations.confirm_code.invalid',
-    }),
     asyncValidator: withI18nMessage(checkCodeValidator('registration'), {
       messagePath: ({ $params }) => {
         const data = $params.value;
@@ -51,6 +57,19 @@ const formRules = {
       },
     }),
   },
+  password: {
+    required: withI18nMessage(validators.required),
+    minLength: withI18nMessage(validators.minLength(6), {
+      messagePath: () => 'validations.password.min_length',
+    }),
+  },
+  confirmPassword: {
+    required: withI18nMessage(validators.required),
+    sameAsPassword: withI18nMessage(sameAsPassword, {
+      messagePath: () => 'validations.password.same_as',
+    }),
+  },
+
 };
 
 export default boot(({ app }) => {

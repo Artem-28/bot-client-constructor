@@ -40,7 +40,7 @@
             <div class="sign-up-page__terms text-color--gray">
               <span v-text="$t('field.label.terms_of_service')" />
               <router-link
-                to="/terms_of_service"
+                to=""
                 class="text-color--primary"
                 target="_blank"
                 @click.stop
@@ -69,12 +69,17 @@
           <base-form-field
             v-model="form.password"
             field="password"
+            rules="password"
+            type="password"
             :label="$t('field.label.password')"
             :placeholder="$t('field.placeholder.password')"
           />
           <base-form-field
             v-model="form.confirmPassword"
             field="confirmPassword"
+            type="password"
+            rules="confirmPassword"
+            toggle-visible
             :label="$t('field.label.confirm_password')"
             :placeholder="$t('field.placeholder.confirm_password')"
           />
@@ -109,10 +114,10 @@ import { useI18n } from 'vue-i18n';
 const step = ref(1);
 
 const form = ref({
-  name: '',
-  email: '',
-  licenseAgreement: false,
-  code: '',
+  name: 'Artem',
+  email: 'artem.mikheev.git@gmail.com',
+  licenseAgreement: true,
+  code: '111111',
   password: '',
   confirmPassword: '',
 });
@@ -139,16 +144,6 @@ async function sendConfirmMessage() {
   return true;
 }
 
-async function checkConfirmCode() {
-  const payload = {
-    destination: form.value.email,
-    type: 'registration',
-    code: form.value.code,
-  };
-  console.log('check confirm code', payload);
-  return true;
-}
-
 async function registration() {
   console.log('registration', form.value);
 }
@@ -159,7 +154,7 @@ async function onsubmit() {
     success = await sendConfirmMessage();
   }
   if (step.value === 2) {
-    success = await checkConfirmCode();
+    success = true;
   }
   if (step.value === 3) {
     await registration();

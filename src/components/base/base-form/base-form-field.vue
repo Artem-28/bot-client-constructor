@@ -5,12 +5,23 @@
       outlined
       :placeholder="placeholder"
       :error="isError"
+      :type="localTypeField"
       @blur="onblur"
       :error-message="errorMessage"
       :loading="loading"
     >
-      <template v-if="checkIcon" v-slot:append>
-        <q-icon name="check" color="positive" />
+      <template v-slot:append>
+        <q-icon v-if="asyncCheck" name="check" color="positive" />
+        <q-checkbox
+          v-if="toggleVisible"
+          v-model="localTypeField"
+          dense
+          true-value="text"
+          false-value="password"
+          checked-icon="visibility"
+          unchecked-icon="visibility_off"
+          size="48px"
+        />
       </template>
     </q-input>
   </base-field>
@@ -18,9 +29,8 @@
 
 <script setup>
 import BaseField from 'components/base/base-field/base-field';
-import { computed, inject, onUnmounted } from 'vue';
-import { BaseFormKey } from 'src/utils/symbols.util';
-import { toArray } from 'src/utils/array.util';
+import { ref, useModel } from 'vue';
+import { useValidateField } from 'src/composable';
 
 const props = defineProps({
   modelValue: {
@@ -47,63 +57,26 @@ const props = defineProps({
     type: [String, Array],
     required: false,
   },
+  type: {
+    type: String,
+    default: 'text',
+  },
+  toggleVisible: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const form = inject(BaseFormKey, null);
 const emit = defineEmits(['update:modelValue', 'blur']);
 
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
-});
+const { isError, loading, errorMessage, asyncCheck, touch } = useValidateField();
+const model = useModel(props, 'modelValue');
 
-const validate = computed(() => {
-  if (!form) return {};
-  return form.validate.value[props.field];
-});
-
-const loading = computed(() => {
-  return validate.value?.$pending;
-});
-
-const isError = computed(() => {
-  return !loading.value && validate.value?.$error;
-});
-
-const checkIcon = computed(() => {
-  return validate.value && Object.prototype.hasOwnProperty.call(validate.value, 'asyncValidator') &&
-    !loading.value && !isError.value && !validate.value?.$invalid;
-});
-
-const errorMessage = computed(() => {
-  const messages = toArray(validate.value?.$errors).map(error => error.$message);
-  if (messages.length === 0) return '';
-  return messages[0];
-});
+const localTypeField = ref(props.type);
 
 function onblur(e) {
   emit('blur', e);
-  validate.value.$touch();
-}
-
-if (form) {
-  const instance = {
-    rules: computed(() => {
-      const rules = toArray(props.rules);
-      if (props.required && !rules.includes('required')) {
-        rules.push('required');
-      }
-      return rules;
-    }),
-  };
-  form.registrationField(props.field, instance);
-  onUnmounted(() => {
-    form.destroyField(props.field);
-  });
+  touch();
 }
 </script>
 
