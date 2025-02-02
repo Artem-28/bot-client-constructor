@@ -1,52 +1,29 @@
-import axios from 'axios';
-import appConfig from 'src/app-config';
-
-const { base_url } = appConfig;
-console.log('base_url', base_url);
-const api = axios.create({
-  baseURL: base_url,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
-
-api.interceptors.response.use(
-  response => response,
-  error => {
-    // Обработка ошибки
-    if (error.response) {
-      const status = error.response.status;
-      if (status === 401) {
-        console.log('401');
-      }
-    }
-    throw error;
-  },
-);
+import { api } from 'boot/axios';
 
 export default class ApiInstance {
-  getToken() {
-    return localStorage.getItem('authToken') | '';
-  }
-
-  async POST_WITH_TOKEN(url, payload) {
-    const { data } = await api.post(url, payload, {
-      headers: {
-        Authorization: `Bearer ${this.getToken()}`,
-      },
-    });
+  get headers() {
+    const data = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      data.Authorization = `Bearer ${token}`;
+    }
     return data;
   }
 
-  async GET_WITH_TOKEN(url, params) {
-    const { data } = await api.get(url, {
+  get(url, params) {
+    return api.get(url, {
       params,
-      headers: {
-        Authorization: `Bearer ${this.getToken()}`,
-      },
+      headers: this.headers,
     });
+  }
 
-    return data;
+  post(url, payload, params) {
+    return api.post(url, payload, {
+      params,
+      headers: this.headers,
+    });
   }
 }

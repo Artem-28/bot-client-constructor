@@ -1,7 +1,7 @@
 import { route } from 'quasar/wrappers';
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router';
 import routes from './routes';
-import api from 'src/api';
+import rootGuard from 'src/router/guards';
 
 /*
  * If not building with SSR mode, you can
@@ -27,11 +27,7 @@ export default route(function(/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  Router.beforeEach(async (to, from) => {
-    const user = await api.getUser();
-    console.log('user', user);
-    console.log('from', from);
-  });
+  Router.beforeEach(rootGuard);
 
   return Router;
 });
