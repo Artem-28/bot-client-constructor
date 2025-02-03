@@ -1,31 +1,22 @@
 import { useAuthStore } from 'src/stores';
 import useToken from 'src/api/use-token';
 
-async function autoLoginGuard(to, from, next) {
+async function autoLoginGuard(to) {
   const canLogin = Object.prototype.hasOwnProperty.call(to.meta, 'autoLogin') && to.meta.autoLogin;
-  if (!canLogin) {
-    next();
-    return;
-  }
+  if (!canLogin) return false;
+
   const token = useToken();
   const { valid } = token.get();
-  if (!valid) {
-    next();
-    return;
-  }
+
+  if (!valid) return false;
 
   const store = useAuthStore();
-  if (store.user) {
-    next('/main');
-    return;
-  }
+
+  if (store.user) return true;
 
   await store.setUser();
-  if (store.user) {
-    next('/main');
-    return;
-  }
-  next();
+
+  return !!store.user;
 }
 
 export default autoLoginGuard;

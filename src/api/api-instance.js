@@ -15,7 +15,7 @@ export default class ApiInstance {
     return data;
   }
 
-  async get(url, params) {
+  async _get(url, params) {
     const { data } = await api.get(url, {
       params,
       headers: this.headers,
@@ -23,8 +23,32 @@ export default class ApiInstance {
     return data;
   }
 
-  async post(url, payload, params) {
+  async _post(url, payload, params) {
     const { data } = await api.post(url, payload, {
+      params,
+      headers: this.headers,
+    });
+    return data;
+  }
+
+  async _delete(url, params) {
+    const { data } = await api.delete(url, {
+      params,
+      headers: this.headers,
+    });
+    return data;
+  }
+
+  async _path(url, payload, params) {
+    const { data } = await api.patch(url, payload, {
+      params,
+      headers: this.headers,
+    });
+    return data;
+  }
+
+  async _put(url, payload, params) {
+    const { data } = await api.put(url, payload, {
       params,
       headers: this.headers,
     });

@@ -13,7 +13,6 @@ export const useAuthStore = defineStore('auth', () => {
   async function setUser() {
     try {
       const { data, success } = await api.getAuthUser();
-      removeUser();
       if (success) user.value = data;
     } catch (e) {
       removeUser();
