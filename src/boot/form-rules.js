@@ -2,22 +2,14 @@ import { boot } from 'quasar/wrappers';
 import * as validators from '@vuelidate/validators';
 import { i18n } from 'boot/i18n';
 import { ref } from 'vue';
+import useApi from 'src/api';
 
 const withI18nMessage = validators.createI18nMessage({ t: i18n.global.t.bind(i18n) });
-
-function checkCode(payload) {
-  const code = '111111';
-  return new Promise((resolve) => {
-    setTimeout(() => resolve({
-      matched: code === payload.code,
-      live: true,
-    }), 2000);
-  });
-}
+const api = useApi();
 
 function checkCodeValidator(type) {
   const params = ref(null);
-  const validator = validators.helpers.withAsync(async(value, form, ctx) => {
+  const validator = validators.helpers.withAsync(async (value, form, ctx) => {
     const isEmail = validators.email.$validator(ctx.form?.email, ctx.form, ctx);
     const isBetween = value.length === 6;
 
@@ -28,9 +20,13 @@ function checkCodeValidator(type) {
       code: value,
     };
 
-    params.value = await checkCode(payload);
-
-    return params.value.matched && params.value.live;
+    try {
+      const { success, data } = await api.checkConfirmCode(payload);
+      if (success) params.value = data;
+      return params.value.matched && params.value.live;
+    } catch (e) {
+      return false;
+    }
   });
   return validators.helpers.withParams({ type: 'data', value: params }, validator);
 }

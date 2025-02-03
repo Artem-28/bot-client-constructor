@@ -110,19 +110,23 @@
 import { computed, ref } from 'vue';
 import { BaseForm, BaseFormSubmitBtn, BaseFormField } from 'components/base/base-form';
 import { useI18n } from 'vue-i18n';
+import useApi from 'src/api';
+import { useRouter } from 'vue-router';
 
 const step = ref(1);
 
 const form = ref({
-  name: 'Artem',
-  email: 'artem.mikheev.git@gmail.com',
-  licenseAgreement: true,
-  code: '111111',
+  name: '',
+  email: '',
+  licenseAgreement: false,
+  code: '',
   password: '',
   confirmPassword: '',
 });
 
 const { t } = useI18n();
+const api = useApi();
+const router = useRouter();
 
 const canBack = computed(() => step.value > 1);
 const canNext = computed(() => step.value < 3);
@@ -140,12 +144,30 @@ function backStep() {
 
 async function sendConfirmMessage() {
   const payload = { destination: form.value.email };
-  console.log('send confirm message', payload);
-  return true;
+  try {
+    const { success } = await api.signUpConfirmMessage(payload);
+    return success;
+  } catch (e) {}
+}
+
+async function signUp() {
+  try {
+    const { success } = await api.signUp(form.value);
+    return success;
+  } catch (e) {
+    return false;
+  }
 }
 
 async function registration() {
-  console.log('registration', form.value);
+  const registered = await signUp();
+  if (!registered) return;
+  const { email, password } = form.value;
+  try {
+    const { success } = await api.signIn({ email, password });
+    if (!success) return;
+    await router.push('/main');
+  } catch (e) {}
 }
 
 async function onsubmit() {
@@ -153,14 +175,11 @@ async function onsubmit() {
   if (step.value === 1 && form.value.licenseAgreement) {
     success = await sendConfirmMessage();
   }
-  if (step.value === 2) {
-    success = true;
-  }
   if (step.value === 3) {
     await registration();
     return;
   }
-  if (success) {
+  if (success || step.value === 2) {
     nextStep();
   }
 }

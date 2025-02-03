@@ -5,33 +5,38 @@
         v-text="$t('page.login.header')"
         class="login-page__header"
       />
-      <base-form class="login-page__form">
-        <base-field :label="$t('field.label.email')">
-          <q-input
-            v-model="email"
-            outlined
-            :placeholder="$t('field.placeholder.email')"
-          />
-        </base-field>
-        <base-field :label="$t('field.label.password')">
-          <q-input
-            v-model="password"
-            outlined
-            :placeholder="$t('field.placeholder.password')"
-          />
-        </base-field>
+      <base-form
+        :form="form"
+        class="login-page__form"
+        @submit="onsubmit"
+      >
+        <base-form-field
+          v-model="form.email"
+          field="email"
+          :label="$t('field.label.email')"
+          :placeholder="$t('field.placeholder.email')"
+        />
+        <base-form-field
+          v-model="form.password"
+          field="password"
+          type="password"
+          toggle-visible
+          :label="$t('field.label.password')"
+          :placeholder="$t('field.placeholder.password')"
+        />
+        <router-link to="/forgot_password" class="login-page__pass-link text-color--gray">
+          <span v-text="$t('button.forgot_password')" />
+        </router-link>
+
+        <base-form-submit-btn
+          :label="$t('button.sign_in')"
+          color="primary"
+          padding="12px"
+          unelevated
+          no-caps
+          class="login-page__sign_in text-bold full-width"
+        />
       </base-form>
-      <router-link to="/forgot_password" class="login-page__pass-link text-color--gray">
-        <span v-text="$t('button.forgot_password')" />
-      </router-link>
-      <q-btn
-        :label="$t('button.sign_in')"
-        color="primary"
-        padding="12px"
-        unelevated
-        no-caps
-        class="login-page__sign_in text-bold full-width"
-      />
       <div class="login-page__sign_up text-color--gray">
         <span v-text="$t('page.login.not_account')" />
         <router-link to="/sign_up" class="text-bold text-color--primary">
@@ -44,11 +49,23 @@
 
 <script setup>
 import { ref } from 'vue';
-import BaseForm from 'components/base/base-form/base-form';
-import BaseField from 'components/base/base-field/base-field';
+import { BaseFormField, BaseForm, BaseFormSubmitBtn } from 'components/base/base-form';
+import useApi from 'src/api';
+import { useRouter } from 'vue-router';
 
-const email = ref('');
-const password = ref('');
+const api = useApi();
+const router = useRouter();
+const form = ref({
+  email: '',
+  password: '',
+});
+
+async function onsubmit() {
+  const response = await api.signIn(form.value);
+  if (!response.success) return;
+  await router.push('/main');
+}
+
 </script>
 
 <style lang="scss" scoped>
