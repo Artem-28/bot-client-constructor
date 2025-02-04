@@ -21,14 +21,14 @@
       <q-tab-panels v-model="step" class="full-width full-height">
 
         <q-tab-panel :name="1" class="sign-up-page__tab">
-          <base-form-field
+          <base-form-input
             v-model="form.name"
             field="name"
             required
             :label="$t('field.label.name')"
             :placeholder="$t('field.placeholder.name')"
           />
-          <base-form-field
+          <base-form-input
             v-model="form.email"
             field="email"
             rules="email"
@@ -56,7 +56,7 @@
             <span v-text="$t('page.sign_up.code_sent')" />
             <span v-text="` ${form.email}`" class="text-color--primary text-bold" />
           </div>
-          <base-form-field
+          <base-form-input
             v-model="form.code"
             field="code"
             rules="registrationCode"
@@ -66,7 +66,7 @@
         </q-tab-panel>
 
         <q-tab-panel :name="3" class="sign-up-page__tab">
-          <base-form-field
+          <base-form-input
             v-model="form.password"
             field="password"
             rules="password"
@@ -74,7 +74,7 @@
             :label="$t('field.label.password')"
             :placeholder="$t('field.placeholder.password')"
           />
-          <base-form-field
+          <base-form-input
             v-model="form.confirmPassword"
             field="confirmPassword"
             type="password"
@@ -92,7 +92,7 @@
         padding="12px"
         unelevated
         no-caps
-        class="text-bold full-width"
+        class="sign-up-page__submit text-bold full-width"
       />
     </base-form>
 
@@ -108,7 +108,7 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { BaseForm, BaseFormSubmitBtn, BaseFormField } from 'components/base/base-form';
+import { BaseForm, BaseFormSubmitBtn, BaseFormInput } from 'components/base/base-form';
 import { useI18n } from 'vue-i18n';
 import useApi from 'src/api';
 import { useRouter } from 'vue-router';
@@ -239,6 +239,9 @@ async function onsubmit() {
   }
   &__confirm-message {
     margin-bottom: 20px;
+  }
+  &__submit {
+    min-height: 48px !important;
   }
 }
 </style>

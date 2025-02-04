@@ -1,9 +1,9 @@
 import BaseForm from './base-form';
-import BaseFormField from './base-form-field';
-import BaseFormSubmitBtn from './base-form-submit-btn';
+import BaseFormInput from './base-form-input/base-form-input';
+import BaseFormSubmitBtn from './base-form-submit-btn/base-form-submit-btn';
 
 export {
   BaseForm,
-  BaseFormField,
+  BaseFormInput,
   BaseFormSubmitBtn,
 };

@@ -70,9 +70,10 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'blur']);
 
 const { isError, loading, errorMessage, asyncCheck, touch } = useValidateField();
-const model = useModel(props, 'modelValue');
 
 const localTypeField = ref(props.type);
+
+const model = useModel(props, 'modelValue');
 
 function onblur(e) {
   emit('blur', e);

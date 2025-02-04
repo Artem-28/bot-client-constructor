@@ -1,90 +1,88 @@
 <template>
-  <div class="forgot-password-page-wrap">
-    <div class="forgot-password-page">
-      <h1
-        v-text="$t('page.forgot_password.header')"
-        class="forgot-password-page__header"
-      />
-      <div v-if="!sent" class="forgot-password-page__content">
-        <span v-text="$t('page.forgot_password.desc')" class="text-color--gray q-mb-md" />
-        <base-form class="full-width">
-          <base-field :label="$t('field.label.email')">
-            <q-input
-              v-model="email"
-              outlined
-              :placeholder="$t('field.placeholder.email')"
-            />
-          </base-field>
-        </base-form>
-        <q-btn
+  <div class="forgot-password-page">
+    <header class="forgot-password-page__header">
+      <h1 v-text="$t('page.forgot_password.header')" class="forgot-password-page__title"/>
+    </header>
+    <div v-if="!sent" class="forgot-password-page__content">
+      <span v-text="$t('page.forgot_password.desc')" class="text-color--gray q-mb-md" />
+      <base-form :form="form" class="full-width full-height flex column" @submit="onsubmit">
+        <base-form-input
+          v-model="form.email"
+          field="email"
+          rules="email"
+          required
+          :label="$t('field.label.email')"
+          :placeholder="$t('field.placeholder.email')"
+        />
+        <base-form-submit-btn
           :label="$t('button.next')"
           color="primary"
           padding="12px"
           unelevated
           no-caps
-          class="forgot-password-page__content__send text-bold full-width"
-          @click="send"
+          class="forgot-password-page__submit text-bold full-width"
         />
-      </div>
-      <div v-else class="forgot-password-page__sent-desc text-color--gray">
-        <span v-text="$t('page.forgot_password.sent_desc')" />
-        <span v-text="` ${email}`" class="text-color--primary text-bold" />
-      </div>
+      </base-form>
+    </div>
+    <div v-else class="forgot-password-page__sent-desc text-color--gray">
+      <span v-text="$t('page.forgot_password.sent_desc')" />
+      <span v-text="` ${form.email}`" class="text-color--primary text-bold" />
     </div>
   </div>
 </template>
 
 <script setup>
-import BaseForm from 'components/base/base-form/base-form';
-import BaseField from 'components/base/base-field/base-field';
+import { BaseForm, BaseFormSubmitBtn, BaseFormInput } from 'components/base/base-form';
 import { ref } from 'vue';
 
-const email = ref('');
+const form = ref({
+  email: '',
+});
 const sent = ref(false);
 
-function send() {
+function onsubmit() {
   sent.value = true;
 }
 </script>
 
 <style lang="scss" scoped>
-.forgot-password-page-wrap {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 500px;
-  padding: 24px;
-  height: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 .forgot-password-page {
+  margin: auto 8px;
+  box-sizing: border-box;
+  padding: 0 calc(50% - 234px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  height: 472px;
+  height: 466px;
   &__header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  &__title {
     font-size: 30px;
     font-weight: 700;
     line-height: 30px;
-    margin: 0 0 16px;
+    margin: 0;
+    padding: 0;
   }
   &__content {
+    margin-top: 32px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: 16px;
     height: 100%;
-    &__send {
-      margin: auto 0 64px 0;
-    }
   }
   &__sent-desc {
+    margin-top: 32px;
     text-align: center;
+  }
+  &__submit {
+    margin: auto 0 48px 0;
+    height: fit-content;
   }
 }
 

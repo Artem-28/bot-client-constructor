@@ -8,9 +8,9 @@
 import { inject } from 'vue';
 import { BaseFormKey } from 'src/utils/symbols.util';
 
-const form = inject(BaseFormKey, null);
-
 const emit = defineEmits(['click']);
+
+const form = inject(BaseFormKey, null);
 
 function validate() {
   if (!form) return;

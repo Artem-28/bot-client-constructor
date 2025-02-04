@@ -1,94 +1,83 @@
 <template>
-  <div class="reset-password-page-wrap">
-    <div class="reset-password-page">
-      <h1
-        v-text="$t('page.reset_password.header')"
-        class="reset-password-page__header"
+  <div class="reset-password-page">
+    <header class="reset-password-page__header">
+      <h1 v-text="$t('page.reset_password.header')" class="reset-password-page__title"/>
+    </header>
+    <base-form :form="form" class="reset-password-page__form">
+      <base-form-input
+        v-model="form.password"
+        field="password"
+        rules="password"
+        type="password"
+        required
+        :label="$t('field.label.new_password')"
+        :placeholder="$t('field.placeholder.new_password')"
       />
-      <div class="reset-password-page__content full-width">
-        <base-form class="reset-password-page__content__form">
-          <base-field :label="$t('field.label.new_password')">
-            <q-input
-              v-model="password"
-              outlined
-              :placeholder="$t('field.placeholder.new_password')"
-            />
-          </base-field>
-          <base-field :label="$t('field.label.confirm_password')">
-            <q-input
-              v-model="confirmPassword"
-              outlined
-              :placeholder="$t('field.placeholder.confirm_password')"
-            />
-          </base-field>
-        </base-form>
-        <q-btn
-          :label="$t('button.save')"
-          color="primary"
-          padding="12px"
-          unelevated
-          no-caps
-          class="reset-password-page__content__save text-bold full-width"
-        />
-      </div>
-    </div>
+      <base-form-input
+        v-model="form.confirmPassword"
+        field="confirmPassword"
+        type="password"
+        rules="confirmPassword"
+        required
+        toggle-visible
+        :label="$t('field.label.confirm_password')"
+        :placeholder="$t('field.placeholder.confirm_password')"
+      />
+      <base-form-submit-btn
+        :label="$t('button.save')"
+        color="primary"
+        padding="12px"
+        unelevated
+        no-caps
+        class="reset-password-page__submit text-bold full-width"
+      />
+    </base-form>
   </div>
 </template>
 
 <script setup>
-import BaseForm from 'components/base/base-form/base-form';
-import BaseField from 'components/base/base-field/base-field';
+import { BaseForm, BaseFormInput, BaseFormSubmitBtn } from 'components/base/base-form';
 import { ref } from 'vue';
 
-const password = ref('');
-const confirmPassword = ref('');
+const form = ref({
+  password: '',
+  confirmPassword: '',
+});
 </script>
 
 <style lang="scss" scoped>
-.reset-password-page-wrap {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 500px;
-  padding: 24px;
-  height: inherit;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 .reset-password-page {
+  margin: auto 8px;
+  box-sizing: border-box;
+  padding: 0 calc(50% - 234px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  gap: 16px;
-  height: 472px;
+  height: 466px;
   &__header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  &__title {
     font-size: 30px;
     font-weight: 700;
     line-height: 30px;
-    margin: 0 0 16px;
+    margin: 0;
+    padding: 0;
   }
-  &__content {
+  &__form {
+    margin-top: 32px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
-    gap: 16px;
+    gap: 4px;
     height: 100%;
-    &__form {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 24px;
-    }
-    &__save {
-      margin: auto 0 64px 0;
-    }
+    width: 100%;
   }
-  &__sent-desc {
-    text-align: center;
+  &__submit {
+    margin: auto 0 48px 0;
   }
 }
 
