@@ -8,6 +8,7 @@ export default {
       header: 'Регистрация',
       have_account: 'Уже есть аккаунт?',
       code_sent: 'Код подтверждения отправлен на почту',
+      timer_desc: 'Не пришел код? Отправить снова можно через',
     },
     forgot_password: {
       header: 'Восстановление пароля',
@@ -44,6 +45,7 @@ export default {
     terms_of_service: 'Пользовательского соглашения',
     next: 'Далее',
     save: 'Сохранить',
+    send_code: 'Отправить код',
   },
   validations: {
     required: 'Поле обязательно для заполнения',

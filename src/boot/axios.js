@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios from 'axios';
 import appConfig from 'src/app-config';
-import { useAuthStore } from 'src/stores';
+import { useAuthStore, useErrorStore } from 'src/stores';
 import useToken from 'src/api/use-token';
 
 // Be careful when using SSR for cross-request state pollution
@@ -14,7 +14,12 @@ const { api_url } = appConfig;
 const api = axios.create({ baseURL: api_url });
 
 export default boot(({ app, router }) => {
+  const errorStore = useErrorStore();
+
   function errorHandler(error) {
+    console.log('error', error.response.data);
+    const errors = error?.response?.data?.errors;
+    if (errors?.length) errorStore.setErrors(errors);
     if (error.status === 401) {
       const token = useToken();
       const authStore = useAuthStore();

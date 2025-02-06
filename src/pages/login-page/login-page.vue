@@ -34,6 +34,7 @@
         padding="12px"
         unelevated
         no-caps
+        :loading="loading"
         class="login-page__submit text-bold full-width"
       />
     </base-form>
@@ -54,15 +55,21 @@ import { useRouter } from 'vue-router';
 
 const api = useApi();
 const router = useRouter();
+
 const form = ref({
   email: '',
   password: '',
 });
+const loading = ref(false);
 
 async function onsubmit() {
-  const response = await api.signIn(form.value);
-  if (!response.success) return;
-  await router.push('/main');
+  loading.value = true;
+  try {
+    await api.signIn(form.value);
+    await router.push('/main');
+  } catch (e) {}
+
+  loading.value = false;
 }
 
 </script>

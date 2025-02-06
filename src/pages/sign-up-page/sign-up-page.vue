@@ -63,6 +63,22 @@
             :label="$t('field.label.confirm_code')"
             :placeholder="$t('field.placeholder.confirm_code')"
           />
+          <div v-if="showTimer" class="sign-up-page__timer">
+            <span v-text="$t('page.sign_up.timer_desc')" />
+            <span v-text="formatTime" class="text-color--primary text-bold" />
+          </div>
+          <q-btn
+            v-else
+            :label="$t('button.send_code')"
+            outline
+            color="primary"
+            padding="12px"
+            unelevated
+            no-caps
+            :loading="loading"
+            class="text-bold"
+            @click="sendConfirmMessage"
+          />
         </q-tab-panel>
 
         <q-tab-panel :name="3" class="sign-up-page__tab">
@@ -91,6 +107,7 @@
         color="primary"
         padding="12px"
         unelevated
+        :loading="loading"
         no-caps
         class="sign-up-page__submit text-bold full-width"
       />
@@ -112,9 +129,10 @@ import { BaseForm, BaseFormSubmitBtn, BaseFormInput } from 'components/base/base
 import { useI18n } from 'vue-i18n';
 import useApi from 'src/api';
 import { useRouter } from 'vue-router';
+import { useTimer } from 'src/composable';
+import moment from 'moment';
 
 const step = ref(1);
-
 const form = ref({
   name: '',
   email: '',
@@ -123,14 +141,19 @@ const form = ref({
   password: '',
   confirmPassword: '',
 });
+const loading = ref(false);
+const codeLiveTime = ref(180000);
 
 const { t } = useI18n();
 const api = useApi();
 const router = useRouter();
 
+const { time, formatTime, init, start } = useTimer();
+
 const canBack = computed(() => step.value > 1);
 const canNext = computed(() => step.value < 3);
 const submitBtnLabel = computed(() => canNext.value ? t('button.next') : t('button.sign_up'));
+const showTimer = computed(() => time.value > 0);
 
 function nextStep() {
   if (!canNext.value) return;
@@ -143,45 +166,51 @@ function backStep() {
 }
 
 async function sendConfirmMessage() {
+  loading.value = true;
   const payload = { destination: form.value.email };
   try {
-    const { success } = await api.signUpConfirmMessage(payload);
-    return success;
-  } catch (e) {}
-}
-
-async function signUp() {
-  try {
-    const { success } = await api.signUp(form.value);
-    return success;
+    const { data } = await api.signUpConfirmMessage(payload);
+    if (!data) return;
+    codeLiveTime.value = moment(data.liveAt) - moment();
+    startTimer();
   } catch (e) {
-    return false;
+    throw new Error(e);
   }
+  loading.value = false;
 }
 
 async function registration() {
-  const registered = await signUp();
-  if (!registered) return;
-  const { email, password } = form.value;
+  loading.value = true;
   try {
-    const { success } = await api.signIn({ email, password });
-    if (!success) return;
+    await api.signUp(form.value);
+    const { email, password } = form.value;
+    await api.signIn({ email, password });
     await router.push('/main');
-  } catch (e) {}
+  } catch (e) {
+  }
+  loading.value = false;
+}
+
+function startTimer() {
+  init(codeLiveTime.value, 0);
+  start();
 }
 
 async function onsubmit() {
-  let success = false;
-  if (step.value === 1 && form.value.licenseAgreement) {
-    success = await sendConfirmMessage();
-  }
-  if (step.value === 3) {
-    await registration();
-    return;
-  }
-  if (success || step.value === 2) {
-    nextStep();
-  }
+  try {
+    if (step.value === 1 && form.value.licenseAgreement) {
+      await sendConfirmMessage();
+      nextStep();
+      return;
+    }
+    if (step.value === 2) {
+      nextStep();
+      return;
+    }
+    if (step.value === 3) {
+      await registration();
+    }
+  } catch (e) {}
 }
 </script>
 
@@ -239,9 +268,16 @@ async function onsubmit() {
   }
   &__confirm-message {
     margin-bottom: 20px;
+    text-align: center;
   }
   &__submit {
     min-height: 48px !important;
+  }
+  &__timer {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 </style>

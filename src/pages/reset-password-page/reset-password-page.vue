@@ -3,7 +3,7 @@
     <header class="reset-password-page__header">
       <h1 v-text="$t('page.reset_password.header')" class="reset-password-page__title"/>
     </header>
-    <base-form :form="form" class="reset-password-page__form">
+    <base-form :form="form" class="reset-password-page__form" @submit="onsubmit">
       <base-form-input
         v-model="form.password"
         field="password"
@@ -29,6 +29,7 @@
         padding="12px"
         unelevated
         no-caps
+        :loading="loading"
         class="reset-password-page__submit text-bold full-width"
       />
     </base-form>
@@ -37,12 +38,46 @@
 
 <script setup>
 import { BaseForm, BaseFormInput, BaseFormSubmitBtn } from 'components/base/base-form';
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import useApi from 'src/api';
+
+const router = useRouter();
+const route = useRoute();
+const api = useApi();
 
 const form = ref({
   password: '',
   confirmPassword: '',
 });
+const token = ref(null);
+const loading = ref(false);
+
+onBeforeMount(() => {
+  token.value = getToken();
+  if (!token.value) router.push('/login');
+});
+
+function getToken() {
+  return route.query.token;
+}
+async function onsubmit() {
+  loading.value = true;
+  localStorage.setItem('accessToken', token.value);
+  try {
+    const payload = {
+      password: form.value.password,
+      confirmPassword: form.value.confirmPassword,
+    };
+    await api.resetPassword(payload);
+    localStorage.setItem('accessToken', '');
+    await router.push('/login');
+  } catch (e) {
+    localStorage.setItem('accessToken', '');
+  }
+
+  loading.value = false;
+}
 </script>
 
 <style lang="scss" scoped>

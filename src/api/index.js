@@ -17,6 +17,14 @@ class Api extends ApiInstance {
     return this._post('api/v1/auth/sign-up/confirm-message', payload);
   }
 
+  resetPasswordMessage(payload) {
+    return this._post('api/v1/auth/reset-password/confirm-message', payload);
+  }
+
+  resetPassword(payload) {
+    return this._post('api/v1/auth/reset-password', payload);
+  }
+
   checkConfirmCode(payload) {
     return this._post('api/v1/confirm-code/check', payload);
   }

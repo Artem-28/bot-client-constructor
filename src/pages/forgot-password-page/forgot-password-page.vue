@@ -20,6 +20,7 @@
           padding="12px"
           unelevated
           no-caps
+          :loading="loading"
           class="forgot-password-page__submit text-bold full-width"
         />
       </base-form>
@@ -34,14 +35,24 @@
 <script setup>
 import { BaseForm, BaseFormSubmitBtn, BaseFormInput } from 'components/base/base-form';
 import { ref } from 'vue';
+import useApi from 'src/api';
+
+const api = useApi();
 
 const form = ref({
   email: '',
 });
 const sent = ref(false);
+const loading = ref(false);
 
-function onsubmit() {
-  sent.value = true;
+async function onsubmit() {
+  loading.value = true;
+  try {
+    const payload = { destination: form.value.email };
+    await api.resetPasswordMessage(payload);
+    sent.value = true;
+  } catch (e) {}
+  loading.value = false;
 }
 </script>
 

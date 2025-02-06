@@ -50,8 +50,12 @@ module.exports = configure(function(/* ctx */) {
       },
     },
     framework: {
-      config: {},
-      plugins: [],
+      plugins: [
+        'Notify',
+      ],
+      config: {
+        notify: {},
+      },
     },
     animations: [],
     ssr: {

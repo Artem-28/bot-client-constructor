@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-defineOptions({
-  name: 'App',
-});
+import { useErrorHandler } from 'src/composable';
+
+useErrorHandler();
 </script>
