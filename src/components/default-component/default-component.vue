@@ -3,7 +3,9 @@
 </template>
 
 <script setup>
-// define[]
+// Props
+
+// Emits
 
 // Variables
 

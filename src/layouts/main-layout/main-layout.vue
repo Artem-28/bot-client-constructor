@@ -1,11 +1,18 @@
 <template>
-  <q-layout>
-    <router-view />
+  <q-layout class="main-layout">
+    <app-header />
+    <q-page-container>
+      <router-view />
+    </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
+import AppHeader from 'components/app/app-header/app-header';
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.main-layout {
+  background-color: $bg-secondary;
+}
 </style>

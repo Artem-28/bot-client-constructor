@@ -59,4 +59,7 @@ export default {
       same_as: 'Пароли не совпадают',
     },
   },
+  account: {
+    logout: 'Выйти',
+  },
 };

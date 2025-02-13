@@ -3,17 +3,16 @@ import moment from 'moment';
 
 function useTimer(params) {
   let timer = null;
-  const format = params?.format || 'mm:ss';
+  const format = params?.format || 'x';
 
   const range = ref({
     from: 0,
     to: 0,
   });
-
   const time = ref(0);
+  const running = ref(false);
 
   const step = computed(() => range.value.to - range.value.from > 0 ? 1000 : -1000);
-  const formatTime = computed(() => moment(time.value).format(format));
 
   watch(time, (value) => {
     if (step.value < 0 && value <= range.value.to) stop();
@@ -21,11 +20,13 @@ function useTimer(params) {
   });
 
   function start() {
+    running.value = true;
     timer = setInterval(() => {
       time.value += step.value;
     }, 1000);
   }
   function stop() {
+    running.value = false;
     clearInterval(timer);
     timer = null;
   }
@@ -38,11 +39,11 @@ function useTimer(params) {
   }
 
   return {
-    time,
-    formatTime,
+    time: computed(() => moment(time.value).format(format)),
     init,
     start,
     stop,
+    running,
   };
 }
 

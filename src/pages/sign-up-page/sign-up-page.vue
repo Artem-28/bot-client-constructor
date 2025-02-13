@@ -63,9 +63,9 @@
             :label="$t('field.label.confirm_code')"
             :placeholder="$t('field.placeholder.confirm_code')"
           />
-          <div v-if="showTimer" class="sign-up-page__timer">
+          <div v-if="running" class="sign-up-page__timer">
             <span v-text="$t('page.sign_up.timer_desc')" />
-            <span v-text="formatTime" class="text-color--primary text-bold" />
+            <span v-text="time" class="text-color--primary text-bold" />
           </div>
           <q-btn
             v-else
@@ -148,12 +148,11 @@ const { t } = useI18n();
 const api = useApi();
 const router = useRouter();
 
-const { time, formatTime, init, start } = useTimer();
+const { time, init, start, running } = useTimer({ format: 'mm:ss' });
 
 const canBack = computed(() => step.value > 1);
 const canNext = computed(() => step.value < 3);
 const submitBtnLabel = computed(() => canNext.value ? t('button.next') : t('button.sign_up'));
-const showTimer = computed(() => time.value > 0);
 
 function nextStep() {
   if (!canNext.value) return;
