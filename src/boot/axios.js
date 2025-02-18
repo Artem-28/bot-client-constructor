@@ -17,7 +17,6 @@ export default boot(({ app, router }) => {
   const errorStore = useErrorStore();
 
   function errorHandler(error) {
-    console.log('error', error.response.data);
     const errors = error?.response?.data?.errors;
     if (errors?.length) errorStore.setErrors(errors);
     if (error.status === 401) {
@@ -35,6 +34,9 @@ export default boot(({ app, router }) => {
     const token = useToken();
     if (path && typeof path === 'string' && path.includes('sign-in')) {
       token.update(data);
+    }
+    if (path && typeof path === 'string' && path.includes('logout')) {
+      token.remove();
     }
     return response;
   }

@@ -9,6 +9,10 @@ class Api extends ApiInstance {
     return this._post('api/v1/auth/sign-up', payload);
   }
 
+  logout() {
+    return this._get('api/v1/auth/logout');
+  }
+
   getAuthUser() {
     return this._get('api/v1/auth/user');
   }

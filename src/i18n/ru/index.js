@@ -18,6 +18,9 @@ export default {
     reset_password: {
       header: 'Восстановление пароля',
     },
+    main: {
+      header: 'Проэкты',
+    },
   },
   field: {
     placeholder: {
@@ -27,6 +30,7 @@ export default {
       name: 'Введите имя пользователя',
       confirm_code: 'Введите код подтверждения',
       confirm_password: 'Подтвердите пароль',
+      search: 'Поиск',
     },
     label: {
       email: 'Email',
@@ -46,6 +50,7 @@ export default {
     next: 'Далее',
     save: 'Сохранить',
     send_code: 'Отправить код',
+    create_project: 'Создать проект',
   },
   validations: {
     required: 'Поле обязательно для заполнения',
