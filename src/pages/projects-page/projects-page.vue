@@ -1,5 +1,5 @@
 <template>
-  <div class="main-page">
+  <div class="projects-page">
     <div class="projects">
       <div class="projects-panel">
         <q-input
@@ -23,7 +23,7 @@
         />
       </div>
 
-      <span v-text="$t('page.main.header')" class="font-24 text-bold" />
+      <span v-text="$t('page.projects.title')" class="font-24 text-bold" />
 
       <div class="projects-grid">
         <project-card
@@ -75,7 +75,7 @@ const search = ref('');
 </script>
 
 <style lang="scss" scoped>
-.main-page {
+.projects-page {
   padding: 40px 32px;
 }
 .projects {

@@ -4,7 +4,7 @@ import autoLoginGuard from 'src/router/guards/auto-login.guard';
 async function rootGuard(to, from, next) {
   const autoLogin = await autoLoginGuard(to);
   if (autoLogin) {
-    next('/main');
+    next('/projects');
     return;
   }
   const access = await authGuard(to, from);

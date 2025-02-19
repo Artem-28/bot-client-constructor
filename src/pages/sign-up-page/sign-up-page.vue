@@ -10,7 +10,7 @@
         class="sign-up-page__back"
         @click="backStep"
       />
-      <h1 class="sign-up-page__title" v-text="$t('page.sign_up.header')"/>
+      <h1 class="sign-up-page__title" v-text="$t('page.sign_up.title')"/>
     </header>
 
     <base-form
@@ -184,7 +184,7 @@ async function registration() {
     await api.signUp(form.value);
     const { email, password } = form.value;
     await api.signIn({ email, password });
-    await router.push('/main');
+    await router.push('/projects');
   } catch (e) {
   }
   loading.value = false;

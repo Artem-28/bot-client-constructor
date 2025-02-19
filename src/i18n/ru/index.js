@@ -5,21 +5,24 @@ export default {
       not_account: 'Нет аккаунта?',
     },
     sign_up: {
-      header: 'Регистрация',
+      title: 'Регистрация',
       have_account: 'Уже есть аккаунт?',
       code_sent: 'Код подтверждения отправлен на почту',
       timer_desc: 'Не пришел код? Отправить снова можно через',
     },
     forgot_password: {
-      header: 'Восстановление пароля',
+      title: 'Восстановление пароля',
       desc: 'Введите адрес электронной почты, который вы указывали при регистрации, чтобы мы отправили вам инструкцию по сбросу пароля',
       sent_desc: 'Инструкция по сбросу пароля отправлена на почту',
     },
     reset_password: {
-      header: 'Восстановление пароля',
+      title: 'Восстановление пароля',
     },
-    main: {
-      header: 'Проэкты',
+    projects: {
+      title: 'Проэкты',
+    },
+    create_project: {
+      title: 'Создание проэкта',
     },
   },
   field: {
@@ -31,6 +34,7 @@ export default {
       confirm_code: 'Введите код подтверждения',
       confirm_password: 'Подтвердите пароль',
       search: 'Поиск',
+      project_title: 'Введите название проэкта',
     },
     label: {
       email: 'Email',
@@ -40,6 +44,7 @@ export default {
       terms_of_service: 'Я прочитал и согласен с условиями ',
       confirm_code: 'Код подтверждения',
       confirm_password: 'Подтверждение пароля',
+      project_title: 'Название проэкта',
     },
   },
   button: {
@@ -51,6 +56,7 @@ export default {
     save: 'Сохранить',
     send_code: 'Отправить код',
     create_project: 'Создать проект',
+    create: 'Создать',
   },
   validations: {
     required: 'Поле обязательно для заполнения',

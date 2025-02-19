@@ -6,9 +6,10 @@
       :placeholder="placeholder"
       :error="isError"
       :type="localTypeField"
-      @blur="onblur"
       :error-message="errorMessage"
       :loading="loading"
+      :dense="dense"
+      @blur="onblur"
     >
       <template v-slot:append>
         <q-icon v-if="asyncCheck" name="check" color="positive" />
@@ -62,6 +63,10 @@ const props = defineProps({
     default: 'text',
   },
   toggleVisible: {
+    type: Boolean,
+    default: false,
+  },
+  dense: {
     type: Boolean,
     default: false,
   },

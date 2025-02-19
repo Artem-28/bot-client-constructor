@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <header class="login-page__header">
-      <h1 v-text="$t('page.login.header')" class="login-page__title"/>
+      <h1 v-text="$t('page.login.title')" class="login-page__title"/>
     </header>
     <base-form
       :form="form"
@@ -66,7 +66,7 @@ async function onsubmit() {
   loading.value = true;
   try {
     await api.signIn(form.value);
-    await router.push('/main');
+    await router.push('/projects');
   } catch (e) {}
 
   loading.value = false;

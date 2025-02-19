@@ -1,7 +1,7 @@
 <template>
   <div class="forgot-password-page">
     <header class="forgot-password-page__header">
-      <h1 v-text="$t('page.forgot_password.header')" class="forgot-password-page__title"/>
+      <h1 v-text="$t('page.forgot_password.title')" class="forgot-password-page__title"/>
     </header>
     <div v-if="!sent" class="forgot-password-page__content">
       <span v-text="$t('page.forgot_password.desc')" class="text-color--gray q-mb-md" />

@@ -1,7 +1,7 @@
 <template>
   <div class="reset-password-page">
     <header class="reset-password-page__header">
-      <h1 v-text="$t('page.reset_password.header')" class="reset-password-page__title"/>
+      <h1 v-text="$t('page.reset_password.title')" class="reset-password-page__title"/>
     </header>
     <base-form :form="form" class="reset-password-page__form" @submit="onsubmit">
       <base-form-input

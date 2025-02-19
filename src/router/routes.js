@@ -1,3 +1,5 @@
+import { RouterView } from 'vue-router';
+
 const layouts = {
   mainLayout: () => import('layouts/main-layout/main-layout'),
   emptyLayout: () => import('layouts/empty-layout/empty-layout'),
@@ -8,7 +10,8 @@ const pages = {
   signUpPage: () => import('pages/sign-up-page/sign-up-page'),
   forgotPasswordPage: () => import('pages/forgot-password-page/forgot-password-page'),
   resetPasswordPage: () => import('pages/reset-password-page/reset-password-page'),
-  mainPage: () => import('pages/main-page/main-page'),
+  projectsPage: () => import('pages/projects-page/projects-page'),
+  createProjectPage: () => import('pages/create-project-page/create-project-page'),
 };
 
 const routes = [
@@ -31,7 +34,14 @@ const routes = [
     component: layouts.mainLayout,
     meta: { authorized: true },
     children: [
-      { path: '/main', component: pages.mainPage },
+      {
+        path: '/projects',
+        component: RouterView,
+        children: [
+          { path: '', component: pages.projectsPage },
+          { path: 'create', component: pages.createProjectPage },
+        ],
+      },
     ],
   },
 ];
