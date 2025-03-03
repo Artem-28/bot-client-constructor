@@ -32,6 +32,14 @@ class Api extends ApiInstance {
   checkConfirmCode(payload) {
     return this._post('api/v1/confirm-code/check', payload);
   }
+
+  getProjects() {
+    return this._get('api/v1/projects');
+  }
+
+  createProject(payload) {
+    return this._post('api/v1/projects', payload);
+  }
 }
 
 const api = new Api();

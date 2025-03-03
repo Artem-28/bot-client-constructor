@@ -1,7 +1,7 @@
 export default {
   page: {
     login: {
-      header: 'Вход',
+      title: 'Вход',
       not_account: 'Нет аккаунта?',
     },
     sign_up: {

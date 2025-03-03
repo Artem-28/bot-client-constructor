@@ -11,7 +11,6 @@ const pages = {
   forgotPasswordPage: () => import('pages/forgot-password-page/forgot-password-page'),
   resetPasswordPage: () => import('pages/reset-password-page/reset-password-page'),
   projectsPage: () => import('pages/projects-page/projects-page'),
-  createProjectPage: () => import('pages/create-project-page/create-project-page'),
 };
 
 const routes = [
@@ -39,7 +38,6 @@ const routes = [
         component: RouterView,
         children: [
           { path: '', component: pages.projectsPage },
-          { path: 'create', component: pages.createProjectPage },
         ],
       },
     ],

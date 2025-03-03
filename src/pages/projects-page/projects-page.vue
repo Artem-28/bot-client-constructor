@@ -20,6 +20,7 @@
           unelevated
           no-caps
           class="projects-panel__btn text-bold"
+          @click="showDialog"
         />
       </div>
 
@@ -33,35 +34,27 @@
         />
       </div>
     </div>
+    <create-project-dialog v-model="dialogIsShow" />
   </div>
 </template>
 
 <script setup>
-import ProjectCard from 'components/project-card/project-card';
-import { ref } from 'vue';
+import ProjectCard from 'components/general/project-card/project-card';
+import { onBeforeMount, ref } from 'vue';
+import CreateProjectDialog from 'components/general/create-project-dialog/create-project-dialog';
+import useApi from 'src/api';
 
 // Props
 
 // Emits
 
 // Variables
-const projects = [
-  { id: 1, title: 'project 1' },
-  { id: 2, title: 'project 2' },
-  { id: 3, title: 'project 3' },
-  { id: 4, title: 'project 4' },
-  { id: 5, title: 'project 5' },
-  { id: 6, title: 'project 6' },
-  { id: 7, title: 'project 7' },
-  { id: 8, title: 'project 8' },
-  { id: 9, title: 'project 9' },
-  { id: 10, title: 'project 10' },
-  { id: 11, title: 'project 11' },
-  { id: 12, title: 'project 12' },
-  { id: 13, title: 'project 13' },
-];
+const api = useApi();
+
 // Reactive variables
+const projects = ref([]);
 const search = ref('');
+const dialogIsShow = ref(false);
 
 // Composition
 
@@ -70,8 +63,20 @@ const search = ref('');
 // Watch
 
 // Hooks
+onBeforeMount(async () => {
+  projects.value = await getProjects();
+});
 
 // Methods
+function showDialog() {
+  dialogIsShow.value = true;
+}
+async function getProjects() {
+  try {
+    const { data } = await api.getProjects();
+    return data;
+  } catch (e) {}
+}
 </script>
 
 <style lang="scss" scoped>
