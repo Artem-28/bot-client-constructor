@@ -34,7 +34,10 @@
         />
       </div>
     </div>
-    <create-project-dialog v-model="dialogIsShow" />
+    <create-project-dialog
+      v-model="dialogIsShow"
+      @create:project="addProject"
+    />
   </div>
 </template>
 
@@ -76,6 +79,9 @@ async function getProjects() {
     const { data } = await api.getProjects();
     return data;
   } catch (e) {}
+}
+function addProject(project) {
+  projects.value.push(project);
 }
 </script>
 

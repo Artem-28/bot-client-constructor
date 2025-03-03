@@ -7,6 +7,7 @@
 
 <script setup>
 // Props
+// eslint-disable-next-line no-unused-vars
 const props = defineProps({
   project: {
     type: Object,
@@ -28,7 +29,6 @@ const props = defineProps({
 // Hooks
 
 // Methods
-console.log(props.project.title);
 </script>
 
 <style scoped lang="scss">

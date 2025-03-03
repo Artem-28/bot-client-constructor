@@ -47,7 +47,7 @@ const props = defineProps({
 });
 
 // Emits
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue', 'create:project']);
 
 // Variables
 const api = useApi();
@@ -80,8 +80,9 @@ async function onsubmit() {
     const payload = {
       title: form.value.title,
     };
-    await api.createProject(payload);
+    const { data } = await api.createProject(payload);
     modelDialog.value = false;
+    emits('create:project', data);
   } catch (e) {}
 
   loading.value = false;
