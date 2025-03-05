@@ -1,8 +1,8 @@
 <template>
-  <header class="app-header">
+  <q-header bordered class="app-header text-color--dark">
     <div class="navigation"></div>
     <app-header-user />
-  </header>
+  </q-header>
 </template>
 
 <script setup>

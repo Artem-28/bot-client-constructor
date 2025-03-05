@@ -1,6 +1,9 @@
 .bg-color--primary {
   background-color: $primary;
 }
+.bg-color--white {
+  background-color: #FFFFFF;
+}
 .text-color--dark {
   color: $text-dark;
 }
@@ -43,4 +46,23 @@
 .font-24 {
   font-size: 24px;
   line-height: 24px;
+}
+.clickable-el {
+  position: relative;
+  cursor: pointer;
+  &:before {
+    transition: $default-transition;
+    content: '';
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &:hover {
+    &:before {
+      background-color: $color-hover-primary;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="modelDialog">
+  <q-dialog v-model="modelDialog" persistent>
     <div class="create-project">
       <div class="create-project__content">
         <span v-text="$t('page.create_project.title')" class="font-24 text-bold" />
@@ -17,14 +17,25 @@
             :placeholder="$t('field.placeholder.project_title')"
           />
 
-          <base-form-submit-btn
-            :label="$t('button.create')"
-            color="primary"
-            unelevated
-            no-caps
-            :loading="loading"
-            class="login-page__submit text-bold full-width"
-          />
+          <div class="create-project-form__actions">
+            <q-btn
+              v-close-popup
+              :label="$t('button.cancel')"
+              color="primary"
+              outline
+              unelevated
+              no-caps
+              class="text-bold full-width"
+            />
+            <base-form-submit-btn
+              :label="$t('button.create')"
+              color="primary"
+              unelevated
+              no-caps
+              :loading="loading"
+              class="text-bold full-width"
+            />
+          </div>
         </base-form>
       </div>
     </div>
@@ -66,6 +77,7 @@ const modelDialog = computed({
   },
   set(value) {
     emits('update:modelValue', value);
+    if (!value) resetForm();
   },
 });
 
@@ -87,11 +99,14 @@ async function onsubmit() {
 
   loading.value = false;
 }
+function resetForm() {
+  form.value.title = '';
+}
 </script>
 
 <style lang="scss" scoped>
 .create-project {
-  max-width: 484px;
+  max-width: 376px;
   width: 100%;
   &__content {
     height: 100%;
@@ -102,6 +117,17 @@ async function onsubmit() {
     flex-direction: column;
     gap: 32px;
     border-radius: 8px;
+  }
+}
+.create-project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  &__actions {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+    margin-top: 8px;
   }
 }
 </style>

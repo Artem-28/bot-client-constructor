@@ -57,6 +57,7 @@ export default {
     send_code: 'Отправить код',
     create_project: 'Создать проект',
     create: 'Создать',
+    cancel: 'Отмена',
   },
   validations: {
     required: 'Поле обязательно для заполнения',
