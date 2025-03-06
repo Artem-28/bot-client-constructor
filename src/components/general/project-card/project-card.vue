@@ -1,5 +1,5 @@
 <template>
-  <div class="project-card">
+  <div class="project-card clickable-el" @click="clickHandle">
     <div class="project-card__preview"></div>
     <span v-text="project.title" class="font-16 text-bold q-my-auto" />
   </div>
@@ -8,6 +8,8 @@
 <script setup>
 // Props
 // eslint-disable-next-line no-unused-vars
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
   project: {
     type: Object,
@@ -17,6 +19,7 @@ const props = defineProps({
 // Emits
 
 // Variables
+const router = useRouter();
 
 // Reactive variables
 
@@ -29,6 +32,9 @@ const props = defineProps({
 // Hooks
 
 // Methods
+function clickHandle() {
+  router.push({ name: 'project', params: { id: props.project.id } });
+}
 </script>
 
 <style scoped lang="scss">
@@ -40,10 +46,8 @@ const props = defineProps({
   padding: 8px;
   border: 1px solid $light-primary;
   border-radius: 8px;
-  cursor: pointer;
   transition: $default-transition;
   &:hover {
-    background-color: $color-hover-primary;
     border: 1px solid $primary;
   }
   &__preview {

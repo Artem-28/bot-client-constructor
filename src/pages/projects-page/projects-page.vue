@@ -19,7 +19,7 @@
           color="primary"
           unelevated
           no-caps
-          class="projects-panel__btn text-bold"
+          class="projects-panel__btn text-bold font-16"
           @click="showDialog"
         />
       </div>

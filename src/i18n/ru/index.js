@@ -19,10 +19,13 @@ export default {
       title: 'Восстановление пароля',
     },
     projects: {
-      title: 'Проэкты',
+      title: 'Проекты',
     },
     create_project: {
-      title: 'Создание проэкта',
+      title: 'Создание проекта',
+    },
+    scripts: {
+      title: 'Сценарии',
     },
   },
   field: {
@@ -34,7 +37,7 @@ export default {
       confirm_code: 'Введите код подтверждения',
       confirm_password: 'Подтвердите пароль',
       search: 'Поиск',
-      project_title: 'Введите название проэкта',
+      project_title: 'Введите название проекта',
     },
     label: {
       email: 'Email',
@@ -44,7 +47,7 @@ export default {
       terms_of_service: 'Я прочитал и согласен с условиями ',
       confirm_code: 'Код подтверждения',
       confirm_password: 'Подтверждение пароля',
-      project_title: 'Название проэкта',
+      project_title: 'Название проекта',
     },
   },
   button: {

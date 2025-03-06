@@ -11,21 +11,22 @@ const pages = {
   forgotPasswordPage: () => import('pages/forgot-password-page/forgot-password-page'),
   resetPasswordPage: () => import('pages/reset-password-page/reset-password-page'),
   projectsPage: () => import('pages/projects-page/projects-page'),
+  scriptsPage: () => import('pages/scripts-page/scripts-page'),
 };
 
 const routes = [
   {
     path: '/',
-    redirect: '/login',
+    redirect: () => ({ name: 'login' }),
     component: layouts.emptyLayout,
     meta: {
       autoLogin: true,
     },
     children: [
-      { path: '/login', component: pages.loginPage },
-      { path: '/sign_up', component: pages.signUpPage },
-      { path: '/forgot_password', component: pages.forgotPasswordPage },
-      { path: '/reset_password', component: pages.resetPasswordPage },
+      { path: '/login', name: 'login', component: pages.loginPage },
+      { path: '/sign_up', name: 'signUp', component: pages.signUpPage },
+      { path: '/forgot_password', name: 'forgotPassword', component: pages.forgotPasswordPage },
+      { path: '/reset_password', name: 'resetPassword', component: pages.resetPasswordPage },
     ],
   },
   {
@@ -37,7 +38,29 @@ const routes = [
         path: '/projects',
         component: RouterView,
         children: [
-          { path: '', component: pages.projectsPage },
+          { path: '', name: 'projects', component: pages.projectsPage },
+          {
+            path: ':id',
+            component: RouterView,
+            children: [
+              {
+                path: '',
+                name: 'project',
+                redirect: () => ({ name: 'scripts' }),
+              },
+              {
+                path: 'scripts',
+                component: RouterView,
+                children: [
+                  {
+                    path: '',
+                    name: 'scripts',
+                    component: pages.scriptsPage(),
+                  },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],

@@ -23,17 +23,32 @@
           size="20px"
         />
       </q-btn >
-      <q-item class="app-drawer-item">
-        <div class="app-drawer-item__content clickable-el">
-          <q-item-section avatar>
-            <q-icon name="inbox" size="22px" />
+      <div
+        v-for="item in appDrawerMenu"
+        :key="item.code"
+        class="app-drawer-item-wrap"
+      >
+        <q-item
+          :to="item.to"
+          exact
+          exact-active-class="app-drawer-item--active"
+          class="app-drawer-item"
+        >
+          <q-item-section avatar class="app-drawer-item__section">
+            <q-icon
+              :name="item.icon"
+              size="22px"
+              class="app-drawer-item__icon text-color--gray"
+            />
           </q-item-section>
-          <q-item-section>
-            <span v-text="'fsdf'" />
+          <q-item-section class="app-drawer-item__section">
+            <span
+              v-text="$t(item.label)"
+              class="app-drawer-item__text text-color--dark text-bold" />
           </q-item-section>
-        </div>
+        </q-item>
 
-      </q-item>
+      </div>
     </q-list>
   </q-drawer>
 </template>
@@ -45,6 +60,7 @@
 
 // Variables
 import { computed, ref } from 'vue';
+import appDrawerMenu from 'components/app/app-drawer/app-drawer-menu';
 
 const drawer = ref(false);
 const isMini = ref(true);
@@ -87,16 +103,32 @@ function toggleMini() {
   border-radius: 0 50% 50% 0;
   border: 1px solid $border;
 }
-.app-drawer-item {
-  padding: 12px !important;
+.app-drawer-item-wrap {
+  padding: 12px;
   display: flex;
-  &__content {
-    height: 48px;
-    width: 100%;
-    display: flex;
-    padding: 0 14px;
-    border-radius: 8px;
+}
+.app-drawer-item {
+  height: 48px;
+  width: 100%;
+  display: flex;
+  padding: 0 14px;
+  border-radius: 8px;
+  color: $primary;
+  gap: 14px;
+  &__section {
+    padding: 0;
+    width: fit-content;
+    min-width: auto;
+  }
+  &--active {
     background-color: $primary;
+    color: #FFFFFF;
+    .app-drawer-item__icon {
+      color: #FFFFFF;
+    }
+    .app-drawer-item__text {
+      color: #FFFFFF;
+    }
   }
 }
 </style>
