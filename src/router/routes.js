@@ -12,6 +12,7 @@ const pages = {
   resetPasswordPage: () => import('pages/reset-password-page/reset-password-page'),
   projectsPage: () => import('pages/projects-page/projects-page'),
   scriptsPage: () => import('pages/scripts-page/scripts-page'),
+  projectSettingsPage: () => import('pages/project-settings-page/project-settings-page'),
 };
 
 const routes = [
@@ -38,7 +39,14 @@ const routes = [
         path: '/projects',
         component: RouterView,
         children: [
-          { path: '', name: 'projects', component: pages.projectsPage },
+          {
+            path: '',
+            name: 'projects',
+            component: pages.projectsPage,
+            meta: {
+              root: true,
+            },
+          },
           {
             path: ':id',
             component: RouterView,
@@ -56,6 +64,17 @@ const routes = [
                     path: '',
                     name: 'scripts',
                     component: pages.scriptsPage(),
+                  },
+                ],
+              },
+              {
+                path: 'settings',
+                component: RouterView,
+                children: [
+                  {
+                    path: '',
+                    name: 'projectSettings',
+                    component: pages.projectSettingsPage(),
                   },
                 ],
               },

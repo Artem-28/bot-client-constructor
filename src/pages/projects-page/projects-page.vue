@@ -115,7 +115,6 @@ function addProject(project) {
     max-width: 800px;
   }
   &__btn {
-    height: 40px;
     min-width: fit-content;
   }
 }

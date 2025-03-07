@@ -4,12 +4,12 @@
     show-if-above
     :mini="isMini"
     :mini-width="76"
-    :width="200"
+    :width="260"
     :breakpoint="0"
     bordered
     class="app-drawer"
   >
-    <q-list>
+    <q-list class="app-drawer-list" >
       <q-btn
         color="primary"
         flat
@@ -104,14 +104,16 @@ function toggleMini() {
   border: 1px solid $border;
 }
 .app-drawer-item-wrap {
-  padding: 12px;
+  padding: 0 17px;
+  margin: 16px 0;
   display: flex;
 }
 .app-drawer-item {
-  height: 48px;
+  height: 40px;
+  min-height: 40px;
   width: 100%;
   display: flex;
-  padding: 0 14px;
+  padding: 0 9px;
   border-radius: 8px;
   color: $primary;
   gap: 14px;

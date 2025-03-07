@@ -27,6 +27,9 @@ export default {
     scripts: {
       title: 'Сценарии',
     },
+    project_settings: {
+      title: 'Настройки проекта',
+    },
   },
   field: {
     placeholder: {

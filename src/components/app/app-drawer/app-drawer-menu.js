@@ -11,4 +11,10 @@ export default [
     label: 'page.scripts.title',
     to: { name: 'scripts' },
   },
+  {
+    code: 'project_settings',
+    icon: 'settings',
+    label: 'page.project_settings.title',
+    to: { name: 'projectSettings' },
+  },
 ];

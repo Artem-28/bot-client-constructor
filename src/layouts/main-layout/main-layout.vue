@@ -1,7 +1,7 @@
 <template>
   <q-layout class="main-layout">
     <app-header />
-    <app-drawer />
+    <app-drawer v-if="showDrawer" />
     <q-page-container class="main-layout__page-container">
       <router-view />
     </q-page-container>
@@ -11,6 +11,33 @@
 <script setup>
 import AppHeader from 'components/app/app-header/app-header';
 import AppDrawer from 'components/app/app-drawer/app-drawer';
+import { onBeforeMount, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+// Props
+
+// Emits
+
+// Variables
+const route = useRoute();
+
+// Reactive variables
+const showDrawer = ref(false);
+
+// Composition
+
+// Computed
+
+// Watch
+watch(route, () => {
+  showDrawer.value = !route.meta?.root;
+});
+
+// Hooks
+onBeforeMount(() => (showDrawer.value = !route.meta?.root));
+
+// Methods
+
 </script>
 
 <style lang="scss" scoped>
