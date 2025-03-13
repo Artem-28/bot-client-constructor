@@ -2,6 +2,8 @@ import { store } from 'quasar/wrappers';
 import { createPinia } from 'pinia';
 import { useAuthStore } from 'stores/auth.store';
 import { useErrorStore } from 'stores/error.store';
+import { useProjectStore } from 'stores/project.store';
+import { useScriptStore } from 'stores/script.store';
 
 /*
  * If not building with SSR mode, you can
@@ -24,4 +26,6 @@ export default store((/* { ssrContext } */) => {
 export {
   useAuthStore,
   useErrorStore,
+  useProjectStore,
+  useScriptStore,
 };

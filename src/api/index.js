@@ -37,8 +37,24 @@ class Api extends ApiInstance {
     return this._get('api/v1/projects');
   }
 
+  getProject({ projectId }) {
+    return this._get(`api/v1/projects/${projectId}`);
+  }
+
   createProject(payload) {
     return this._post('api/v1/projects', payload);
+  }
+
+  createScript({ projectId }, payload) {
+    return this._post(`api/v1/projects/${projectId}/scripts`, payload);
+  }
+
+  getScripts({ projectId }) {
+    return this._get(`api/v1/projects/${projectId}/scripts`);
+  }
+
+  getScript({ projectId, scriptId }) {
+    return this._get(`api/v1/projects/${projectId}/scripts/${scriptId}`);
   }
 }
 

@@ -1,51 +1,51 @@
 <template>
-  <div class="projects-page">
-    <div class="projects">
-      <div class="projects-panel">
-        <q-input
-          v-model="search"
-          outlined
-          dense
-          :placeholder="$t('field.placeholder.search')"
-          class="projects-panel__search"
-        >
-          <template v-slot:prepend>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-
-        <q-btn
-          :label="$t('button.create_project')"
-          color="primary"
-          unelevated
-          no-caps
-          class="projects-panel__btn text-bold font-16"
-          @click="showDialog"
-        />
-      </div>
-
+  <div class="projects">
+    <div class="projects-header">
       <span v-text="$t('page.projects.title')" class="font-24 text-bold" />
+      <q-input
+        v-model="search"
+        outlined
+        dense
+        :placeholder="$t('field.placeholder.search')"
+        class="projects-header__search"
+      >
+        <template v-slot:prepend>
+          <q-icon name="search" />
+        </template>
+      </q-input>
 
-      <div class="projects-grid">
-        <project-card
-          v-for="project in projects"
-          :key="project.id"
-          :project="project"
-        />
-      </div>
+      <q-btn
+        :label="$t('button.create_project')"
+        color="primary"
+        unelevated
+        no-caps
+        class="projects-header__btn text-bold font-16"
+        @click="showDialog"
+      />
     </div>
-    <create-project-dialog
+
+    <div class="projects-grid">
+      <project-card
+        v-for="project in projects"
+        :key="project.id"
+        :project="project"
+      />
+    </div>
+    <base-dialog
       v-model="dialogIsShow"
-      @create:project="addProject"
-    />
+      :title="$t('page.projects.create_project')"
+    >
+      <create-project-form @create:project="addProject" />
+    </base-dialog>
   </div>
 </template>
 
 <script setup>
 import ProjectCard from 'components/general/project-card/project-card';
 import { onBeforeMount, ref } from 'vue';
-import CreateProjectDialog from 'components/general/create-project-dialog/create-project-dialog';
 import useApi from 'src/api';
+import BaseDialog from 'components/base/base-dialog/base-dialog';
+import CreateProjectForm from 'components/general/forms/create-project-form/create-project-form';
 
 // Props
 
@@ -74,6 +74,9 @@ onBeforeMount(async () => {
 function showDialog() {
   dialogIsShow.value = true;
 }
+function hideDialog() {
+  dialogIsShow.value = false;
+}
 async function getProjects() {
   try {
     const { data } = await api.getProjects();
@@ -81,14 +84,12 @@ async function getProjects() {
   } catch (e) {}
 }
 function addProject(project) {
+  hideDialog();
   projects.value.push(project);
 }
 </script>
 
 <style lang="scss" scoped>
-.projects-page {
-  padding: 40px 32px;
-}
 .projects {
   height: 100%;
   width: 100%;
@@ -105,14 +106,15 @@ function addProject(project) {
   column-gap: 16px;
   row-gap: 24px;
 }
-.projects-panel {
+.projects-header {
   display: flex;
   gap: 24px;
   width: 100%;
-  justify-content: space-between;
+  align-items: center;
   &__search {
     width: 100%;
     max-width: 800px;
+    margin-left: auto;
   }
   &__btn {
     min-width: fit-content;

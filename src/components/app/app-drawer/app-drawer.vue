@@ -38,7 +38,7 @@
             <q-icon
               :name="item.icon"
               size="22px"
-              class="app-drawer-item__icon text-color--gray"
+              class="app-drawer-item__icon text-color--primary"
             />
           </q-item-section>
           <q-item-section class="app-drawer-item__section">
@@ -85,6 +85,8 @@ function toggleMini() {
 <style lang="scss">
 .app-drawer {
   overflow: visible;
+  display: flex;
+  flex-direction: column;
 }
 </style>
 

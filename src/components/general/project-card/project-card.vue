@@ -33,7 +33,7 @@ const router = useRouter();
 
 // Methods
 function clickHandle() {
-  router.push({ name: 'project', params: { id: props.project.id } });
+  router.push({ name: 'project', params: { project_id: props.project.id } });
 }
 </script>
 

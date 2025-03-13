@@ -20,12 +20,11 @@ export default {
     },
     projects: {
       title: 'Проекты',
-    },
-    create_project: {
-      title: 'Создание проекта',
+      create_project: 'Создание проекта',
     },
     scripts: {
       title: 'Сценарии',
+      create_script: 'Создание сценария',
     },
     project_settings: {
       title: 'Настройки проекта',
@@ -41,6 +40,7 @@ export default {
       confirm_password: 'Подтвердите пароль',
       search: 'Поиск',
       project_title: 'Введите название проекта',
+      script_title: 'Введите название сценария',
     },
     label: {
       email: 'Email',
@@ -51,6 +51,7 @@ export default {
       confirm_code: 'Код подтверждения',
       confirm_password: 'Подтверждение пароля',
       project_title: 'Название проекта',
+      script_title: 'Название сценария',
     },
   },
   button: {
@@ -62,6 +63,7 @@ export default {
     save: 'Сохранить',
     send_code: 'Отправить код',
     create_project: 'Создать проект',
+    create_script: 'Создать сценарий',
     create: 'Создать',
     cancel: 'Отмена',
   },
@@ -76,6 +78,9 @@ export default {
       min_length: 'Пароль должен содержать не менее 6 символов',
       same_as: 'Пароли не совпадают',
     },
+  },
+  base: {
+    title: 'Название',
   },
   account: {
     logout: 'Выйти',

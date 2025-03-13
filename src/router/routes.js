@@ -48,7 +48,7 @@ const routes = [
             },
           },
           {
-            path: ':id',
+            path: ':project_id',
             component: RouterView,
             children: [
               {

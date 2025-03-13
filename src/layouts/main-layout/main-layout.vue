@@ -3,7 +3,9 @@
     <app-header />
     <app-drawer v-if="showDrawer" />
     <q-page-container class="main-layout__page-container">
-      <router-view />
+      <div class="main-layout__page-content">
+        <router-view />
+      </div>
     </q-page-container>
   </q-layout>
 </template>
@@ -44,7 +46,11 @@ onBeforeMount(() => (showDrawer.value = !route.meta?.root));
 .main-layout {
   background-color: $bg-secondary;
   &__page-container {
-    height: calc(100vh - 64px);
+    height: 100vh;
+  }
+  &__page-content {
+    height: 100%;
+    padding: 40px 32px;
   }
 }
 </style>
