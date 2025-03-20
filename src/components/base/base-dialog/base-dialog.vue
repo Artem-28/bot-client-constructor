@@ -7,19 +7,39 @@
         </slot>
 
         <slot name="title">
-          <span v-if="title" v-text="title" class="font-24 text-bold" />
+          <span v-if="title" v-text="title" class="font-22 text-bold" />
         </slot>
 
         <slot />
 
-        <slot name="actions"></slot>
+        <slot name="actions">
+          <div v-if="hasActions" class="base-dialog__actions">
+            <q-btn
+              v-if="accept"
+              :label="accept"
+              color="primary"
+              unelevated
+              no-caps
+              @click="onAccept"
+            />
+            <q-btn
+              v-if="cancel"
+              :label="cancel"
+              color="primary"
+              unelevated
+              no-caps
+              outline
+              @click="onCancel"
+            />
+          </div>
+        </slot>
       </div>
     </div>
   </q-dialog>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 
 // Props
 const props = defineProps({
@@ -31,16 +51,40 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  confirmKey: {
+    type: String,
+  },
   icon: {
     type: String,
     required: false,
   },
+  accept: {
+    type: String,
+    required: false,
+  },
+  cancel: {
+    type: String,
+    required: false,
+  },
+  acceptFn: {
+    type: Function,
+    required: false,
+  },
+  cancelFn: {
+    type: Function,
+    required: false,
+  },
+  sync: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // Emits
-const emits = defineEmits(['update:modelValue', 'create:project']);
+const emits = defineEmits(['update:modelValue', 'accept', 'cancel']);
 
 // Variables
+const confirm = inject(props.confirmKey, null);
 
 // Reactive variables
 
@@ -55,12 +99,33 @@ const modelDialog = computed({
     emits('update:modelValue', value);
   },
 });
+const hasActions = computed(() => !!(props.accept || props.cancel));
 
 // Watch
 
 // Hooks
 
 // Methods
+async function fnHandle(fn) {
+  if (!fn || typeof fn !== 'function') return;
+  const data = confirm?.data?.value;
+  props.sync ? await fn(data) : fn(data);
+}
+async function onAccept() {
+  await fnHandle(props.acceptFn);
+  if (confirm) {
+    confirm.accept();
+  }
+  emits('confirm');
+}
+
+async function onCancel() {
+  await fnHandle(props.cancelFn);
+  if (confirm) {
+    confirm.cancel();
+  }
+  emits('cancel');
+}
 </script>
 
 <style scoped lang="scss">
@@ -78,5 +143,11 @@ const modelDialog = computed({
   gap: 32px;
   border-radius: 8px;
   align-items: center;
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
 }
 </style>

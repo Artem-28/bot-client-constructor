@@ -26,7 +26,7 @@
           :key="column.name"
           class="base-table-item__cell text-color--dark"
         >
-          <slot :name="`cell-${column.name}`" >
+          <slot :name="`cell-${column.name}`" :item="item" >
             <span v-text="item[column.name] || ''" />
           </slot>
         </div>
