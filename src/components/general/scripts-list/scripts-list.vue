@@ -1,9 +1,10 @@
 <template>
   <base-table
+    v-if="scripts.length"
     :columns="columns"
     :items="scripts"
     clickable
-    grid-columns="1fr 80px"
+    grid-columns="1fr 60px"
   >
     <template #cell-controls="{ item }">
       <div class="script-controls">
@@ -19,6 +20,7 @@
       </div>
     </template>
   </base-table>
+
   <base-dialog
     v-model="deleteDialog"
     confirm-key="delete"
@@ -26,22 +28,43 @@
     :accept="$t('button.delete')"
     :cancel="$t('button.cancel')"
     :accept-fn="deleteScript"
+    sync
   >
     <span v-text="$t('page.scripts.delete_script_confirm')" class="text-center" />
+  </base-dialog>
+
+  <base-dialog
+    v-model="renameDialog"
+    confirm-key="rename"
+    :title="$t('page.scripts.rename_script')"
+  >
+    <template #default="{ data }">
+      <rename-script-form v-if="data" :script="data" @update:script="renameScript" />
+    </template>
   </base-dialog>
 </template>
 
 <script setup>
 import BaseTable from 'components/base/base-table/base-table';
-import { getCurrentInstance, onBeforeMount, ref } from 'vue';
+import {
+  getCurrentInstance,
+  onMounted,
+  ref,
+} from 'vue';
 import useApi from 'src/api';
-import { useRoute } from 'vue-router';
 import BaseDialog from 'components/base/base-dialog/base-dialog';
 import ScriptMenu from 'components/general/scripts-list/script-menu/script-menu';
 import { SCRIPT_COMMANDS } from 'components/general/scripts-list/script-menu/script-menu-items';
 import { useConfirm } from 'src/composable';
+import RenameScriptForm from 'components/general/forms/rename-script-form/rename-script-form';
 
 // Props
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true,
+  },
+});
 
 // Emits
 
@@ -51,7 +74,6 @@ defineExpose({
 
 // Variables
 const api = useApi();
-const route = useRoute();
 const { proxy } = getCurrentInstance();
 const columns = [
   { name: 'title', label: proxy.$t('base.title') },
@@ -61,23 +83,25 @@ const columns = [
 // Reactive variables
 const scripts = ref([]);
 const deleteDialog = ref(false);
+const renameDialog = ref(false);
 
 // Composition
 const { confirm: deleteConfirm } = useConfirm('delete');
+const { confirm: renameConfirm } = useConfirm('rename');
 
 // Computed
 
 // Watch
 
 // Hooks
-onBeforeMount(async () => {
-  const { project_id } = route.params;
-  scripts.value = await getScripts(project_id);
+onMounted(async () => {
+  scripts.value = await getScripts();
 });
 
 // Methods
-async function getScripts(projectId) {
+async function getScripts() {
   try {
+    const projectId = props.project.id;
     const { data } = await api.getScripts({ projectId });
     return data;
   } catch (e) {}
@@ -85,21 +109,40 @@ async function getScripts(projectId) {
 function addScript(script) {
   scripts.value.push(script);
 }
+function updateScript(script) {
+  const index = scripts.value.findIndex(item => item.id === script.id);
+  if (index < 0) return;
+  scripts.value.splice(index, 1, script);
+}
+async function renameScriptHandle(item) {
+  renameDialog.value = true;
+  renameConfirm(item);
+}
+function renameScript(script) {
+  renameDialog.value = false;
+  updateScript(script);
+}
 async function deleteScriptHandle(item) {
   deleteDialog.value = true;
   await deleteConfirm(item);
   deleteDialog.value = false;
 }
 async function deleteScript(item) {
-  console.log('deleteScript', item);
+  try {
+    const projectId = props.project.id;
+    const { success } = await api.deleteScript({ projectId, scriptId: item.id });
+    if (!success) return;
+    scripts.value = scripts.value.filter(s => s.id !== item.id);
+  } catch (e) {}
 }
-function commandHandle(code, item) {
+async function commandHandle(code, item) {
   switch (code) {
     case SCRIPT_COMMANDS.RENAME: {
+      await renameScriptHandle(item);
       break;
     }
     case SCRIPT_COMMANDS.DELETE: {
-      deleteScriptHandle(item);
+      await deleteScriptHandle(item);
       break;
     }
   }

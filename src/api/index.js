@@ -56,6 +56,14 @@ class Api extends ApiInstance {
   getScript({ projectId, scriptId }) {
     return this._get(`api/v1/projects/${projectId}/scripts/${scriptId}`);
   }
+
+  deleteScript({ projectId, scriptId }) {
+    return this._delete(`api/v1/projects/${projectId}/scripts/${scriptId}`);
+  }
+
+  updateScript({ projectId, scriptId }, payload) {
+    return this._patch(`api/v1/projects/${projectId}/scripts/${scriptId}`, payload);
+  }
 }
 
 const api = new Api();

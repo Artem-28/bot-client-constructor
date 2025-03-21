@@ -10,7 +10,7 @@
           <span v-if="title" v-text="title" class="font-22 text-bold" />
         </slot>
 
-        <slot />
+        <slot :data="confirm?.data?.value" />
 
         <slot name="actions">
           <div v-if="hasActions" class="base-dialog__actions">
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, ref } from 'vue';
 
 // Props
 const props = defineProps({
@@ -87,6 +87,7 @@ const emits = defineEmits(['update:modelValue', 'accept', 'cancel']);
 const confirm = inject(props.confirmKey, null);
 
 // Reactive variables
+const loading = ref(false);
 
 // Composition
 
@@ -108,8 +109,10 @@ const hasActions = computed(() => !!(props.accept || props.cancel));
 // Methods
 async function fnHandle(fn) {
   if (!fn || typeof fn !== 'function') return;
+  loading.value = true;
   const data = confirm?.data?.value;
   props.sync ? await fn(data) : fn(data);
+  loading.value = false;
 }
 async function onAccept() {
   await fnHandle(props.acceptFn);

@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router';
 import { useProjectStore, useScriptStore } from 'src/stores';
 import useApi from 'src/api';
 
-function useDataLoader() {
+async function useDataLoader() {
   const api = useApi();
   const route = useRoute();
 

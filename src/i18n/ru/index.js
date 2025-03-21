@@ -25,6 +25,7 @@ export default {
     scripts: {
       title: 'Сценарии',
       create_script: 'Создание сценария',
+      rename_script: 'Изминение названия',
       delete_script: 'Удаление сценария',
       delete_script_confirm: 'Вы действительно хотите удалить сценарий?',
     },
@@ -70,6 +71,7 @@ export default {
     cancel: 'Отмена',
     rename: 'Изменить название',
     delete: 'Удалить',
+    apply: 'Применить',
   },
   validations: {
     required: 'Поле обязательно для заполнения',

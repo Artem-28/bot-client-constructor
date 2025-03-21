@@ -24,7 +24,7 @@
       />
     </div>
 
-    <scripts-list ref="refList" />
+    <scripts-list v-if="project" ref="refList" :project="project" />
 
     <base-dialog
       v-model="dialogIsShow"
@@ -36,16 +36,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import BaseDialog from 'components/base/base-dialog/base-dialog';
 import CreateScriptForm from 'components/general/forms/create-script-form/create-script-form';
 import ScriptsList from 'components/general/scripts-list/scripts-list';
+import { useProjectStore } from 'src/stores';
 
 // Props
 
 // Emits
 
 // Variables
+const projectStore = useProjectStore();
 
 // Reactive variables
 const search = ref('');
@@ -55,6 +57,7 @@ const refList = ref(null);
 // Composition
 
 // Computed
+const project = computed(() => projectStore.project);
 
 // Watch
 

@@ -39,7 +39,7 @@ export default class ApiInstance {
     return data;
   }
 
-  async _path(url, payload, params) {
+  async _patch(url, payload, params) {
     const { data } = await api.patch(url, payload, {
       params,
       headers: this.headers,
