@@ -32,6 +32,12 @@ export default {
     project_settings: {
       title: 'Настройки проекта',
     },
+    users: {
+      title: 'Пользователи',
+      add_user: 'Добавление пользователя',
+      delete_user: 'Удаление пользователя',
+      delete_user_confirm: 'Вы действительно хотите удалить пользователя из проекта?',
+    },
   },
   field: {
     placeholder: {
@@ -72,10 +78,12 @@ export default {
     rename: 'Изменить название',
     delete: 'Удалить',
     apply: 'Применить',
+    add_user: 'Добавить пользователя',
+    add: 'Добавить',
   },
   validations: {
     required: 'Поле обязательно для заполнения',
-    email: 'ВВеден не корректные email',
+    email: 'Введен некорректный email',
     confirm_code: {
       invalid: 'Неверный код подтверждения',
       live: 'Код подтверждения не действительный',
@@ -87,6 +95,9 @@ export default {
   },
   base: {
     title: 'Название',
+    email: 'Почта',
+    user: 'Пользователь',
+    added_at: 'Дата добавления',
   },
   account: {
     logout: 'Выйти',

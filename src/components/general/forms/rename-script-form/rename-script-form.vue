@@ -80,7 +80,7 @@ async function onsubmit() {
     const payload = {
       title: form.value.title,
     };
-    const { data } = await api.updateScript({ projectId, scriptId }, payload);
+    const { data } = await api.updateScript({ projectId, scriptId, payload });
     emits('update:script', data);
   } catch (e) {}
 

@@ -6,7 +6,7 @@
     clickable
     grid-columns="1fr 60px"
   >
-    <template #cell-controls="{ item }">
+    <template #cell:controls="{ item }">
       <div class="script-controls">
         <q-icon
           name="more_horiz"
@@ -46,42 +46,37 @@
 
 <script setup>
 import BaseTable from 'components/base/base-table/base-table';
-import {
-  getCurrentInstance,
-  onMounted,
-  ref,
-} from 'vue';
+import { computed, ref } from 'vue';
 import useApi from 'src/api';
 import BaseDialog from 'components/base/base-dialog/base-dialog';
 import ScriptMenu from 'components/general/scripts-list/script-menu/script-menu';
 import { SCRIPT_COMMANDS } from 'components/general/scripts-list/script-menu/script-menu-items';
 import { useConfirm } from 'src/composable';
 import RenameScriptForm from 'components/general/forms/rename-script-form/rename-script-form';
+import { useI18n } from 'vue-i18n';
+import { useProjectStore } from 'src/stores';
 
 // Props
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true,
+defineProps({
+  scripts: {
+    type: Array,
+    default: () => [],
   },
 });
 
 // Emits
-
-defineExpose({
-  addScript,
-});
+const emits = defineEmits(['update:script', 'delete:script']);
 
 // Variables
+const projectStore = useProjectStore();
 const api = useApi();
-const { proxy } = getCurrentInstance();
+const { t } = useI18n();
 const columns = [
-  { name: 'title', label: proxy.$t('base.title') },
+  { name: 'title', label: t('base.title') },
   { name: 'controls', label: '' },
 ];
 
 // Reactive variables
-const scripts = ref([]);
 const deleteDialog = ref(false);
 const renameDialog = ref(false);
 
@@ -90,37 +85,20 @@ const { confirm: deleteConfirm } = useConfirm('delete');
 const { confirm: renameConfirm } = useConfirm('rename');
 
 // Computed
+const project = computed(() => projectStore.project);
 
 // Watch
 
 // Hooks
-onMounted(async () => {
-  scripts.value = await getScripts();
-});
 
 // Methods
-async function getScripts() {
-  try {
-    const projectId = props.project.id;
-    const { data } = await api.getScripts({ projectId });
-    return data;
-  } catch (e) {}
-}
-function addScript(script) {
-  scripts.value.push(script);
-}
-function updateScript(script) {
-  const index = scripts.value.findIndex(item => item.id === script.id);
-  if (index < 0) return;
-  scripts.value.splice(index, 1, script);
-}
 async function renameScriptHandle(item) {
   renameDialog.value = true;
   renameConfirm(item);
 }
 function renameScript(script) {
   renameDialog.value = false;
-  updateScript(script);
+  emits('update:script', script);
 }
 async function deleteScriptHandle(item) {
   deleteDialog.value = true;
@@ -129,10 +107,10 @@ async function deleteScriptHandle(item) {
 }
 async function deleteScript(item) {
   try {
-    const projectId = props.project.id;
+    const projectId = project.value.id;
     const { success } = await api.deleteScript({ projectId, scriptId: item.id });
     if (!success) return;
-    scripts.value = scripts.value.filter(s => s.id !== item.id);
+    emits('delete:script', item);
   } catch (e) {}
 }
 async function commandHandle(code, item) {

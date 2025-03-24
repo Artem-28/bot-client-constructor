@@ -26,7 +26,7 @@
           :key="column.name"
           class="base-table-item__cell text-color--dark"
         >
-          <slot :name="`cell-${column.name}`" :item="item" >
+          <slot :name="`cell:${column.name}`" :item="item" :value="item[column.name]" >
             <span v-text="item[column.name] || ''" />
           </slot>
         </div>
@@ -103,7 +103,6 @@ function clickHandle(item) {
   display: grid;
   grid-auto-columns: 1fr 1fr 1fr 100px;
   grid-auto-flow: column;
-  height: 40px;
   border-radius: 8px;
 }
 .base-table-item {
@@ -113,7 +112,7 @@ function clickHandle(item) {
   &__cell {
     display: flex;
     align-items: center;
-    padding: 0 18px;
+    padding: 8px 18px;
   }
 }
 </style>

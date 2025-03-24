@@ -1,5 +1,6 @@
 import authGuard from 'src/router/guards/auth.guard';
 import autoLoginGuard from 'src/router/guards/auto-login.guard';
+import projectGuard from 'src/router/guards/project.guard';
 
 async function rootGuard(to, from, next) {
   const autoLogin = await autoLoginGuard(to);
@@ -12,6 +13,9 @@ async function rootGuard(to, from, next) {
     next('/login');
     return;
   }
+
+  await projectGuard(to);
+
   next();
 }
 

@@ -1,28 +1,29 @@
 <template>
-  <div class="projects">
-    <div class="projects-header">
-      <span v-text="$t('page.projects.title')" class="font-24 text-bold" />
-      <q-input
-        v-model="search"
-        outlined
-        dense
-        :placeholder="$t('field.placeholder.search')"
-        class="projects-header__search"
-      >
-        <template v-slot:prepend>
-          <q-icon name="search" />
-        </template>
-      </q-input>
+  <app-page>
+    <app-page-header :title="$t('page.projects.title')">
+      <template #actions>
+        <q-input
+          v-model="search"
+          outlined
+          dense
+          :placeholder="$t('field.placeholder.search')"
+          class="projects-search"
+        >
+          <template v-slot:prepend>
+            <q-icon name="search" />
+          </template>
+        </q-input>
 
-      <q-btn
-        :label="$t('button.create_project')"
-        color="primary"
-        unelevated
-        no-caps
-        class="projects-header__btn text-bold font-16"
-        @click="showDialog"
-      />
-    </div>
+        <q-btn
+          :label="$t('button.create_project')"
+          color="primary"
+          unelevated
+          no-caps
+          class="text-bold font-16"
+          @click="showDialog"
+        />
+      </template>
+    </app-page-header>
 
     <div class="projects-grid">
       <project-card
@@ -37,7 +38,7 @@
     >
       <create-project-form @create:project="addProject" />
     </base-dialog>
-  </div>
+  </app-page>
 </template>
 
 <script setup>
@@ -46,6 +47,8 @@ import { onBeforeMount, ref } from 'vue';
 import useApi from 'src/api';
 import BaseDialog from 'components/base/base-dialog/base-dialog';
 import CreateProjectForm from 'components/general/forms/create-project-form/create-project-form';
+import AppPage from 'components/app/app-page/app-page';
+import AppPageHeader from 'components/app/app-page/app-page-header/app-page-header';
 
 // Props
 
@@ -90,35 +93,15 @@ function addProject(project) {
 </script>
 
 <style lang="scss" scoped>
-.projects {
-  height: 100%;
+.projects-search {
   width: 100%;
-  padding: 24px 16px;
-  background-color: $bg-primary;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  border-radius: 8px;
+  max-width: 800px;
 }
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   column-gap: 16px;
   row-gap: 24px;
-}
-.projects-header {
-  display: flex;
-  gap: 24px;
-  width: 100%;
-  align-items: center;
-  &__search {
-    width: 100%;
-    max-width: 800px;
-    margin-left: auto;
-  }
-  &__btn {
-    min-width: fit-content;
-  }
 }
 
 @media (max-width: 2100px) {

@@ -7,6 +7,7 @@
     <base-form-input
       v-model="form.title"
       dense
+      required
       field="title"
       :rules="['required']"
       :label="$t('field.label.script_title')"
@@ -73,7 +74,7 @@ async function onsubmit() {
     const payload = {
       title: form.value.title,
     };
-    const { data } = await api.createScript({ projectId }, payload);
+    const { data } = await api.createScript({ projectId, payload });
     emits('create:script', data);
   } catch (e) {}
 

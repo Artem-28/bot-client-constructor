@@ -1,13 +1,13 @@
 <template>
   <app-page>
-    <app-page-header :title="$t('page.scripts.title')">
+    <app-page-header :title="$t('page.users.title')">
       <template #actions>
         <q-input
           v-model="search"
           outlined
           dense
           :placeholder="$t('field.placeholder.search')"
-          class="scripts-search"
+          class="users-search"
         >
           <template v-slot:prepend>
             <q-icon name="search" />
@@ -15,7 +15,7 @@
         </q-input>
 
         <q-btn
-          :label="$t('button.create_script')"
+          :label="$t('button.add_user')"
           color="primary"
           unelevated
           no-caps
@@ -25,30 +25,26 @@
       </template>
     </app-page-header>
 
-    <scripts-list
-      :scripts="scripts"
-      @update:script="updateScript"
-      @delete:script="deleteScript"
-    />
+    <users-list :users="users" />
 
     <base-dialog
       v-model="dialogIsShow"
-      :title="$t('page.scripts.create_script')"
+      :title="$t('page.users.add_user')"
     >
-      <create-script-form @create:script="addScript" />
+      <add-user-form @create:project="addProject" />
     </base-dialog>
   </app-page>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
+import useApi from 'src/api';
 import BaseDialog from 'components/base/base-dialog/base-dialog';
-import CreateScriptForm from 'components/general/forms/create-script-form/create-script-form';
-import ScriptsList from 'components/general/scripts-list/scripts-list';
 import AppPage from 'components/app/app-page/app-page';
 import AppPageHeader from 'components/app/app-page/app-page-header/app-page-header';
+import AddUserForm from 'components/general/forms/add-user-form/add-user-form';
+import UsersList from 'components/general/users-list/users-list';
 import { useProjectStore } from 'src/stores';
-import useApi from 'src/api';
 
 // Props
 
@@ -59,9 +55,9 @@ const projectStore = useProjectStore();
 const api = useApi();
 
 // Reactive variables
+const users = ref([]);
 const search = ref('');
 const dialogIsShow = ref(false);
-const scripts = ref([]);
 
 // Composition
 
@@ -69,42 +65,46 @@ const scripts = ref([]);
 const project = computed(() => projectStore.project);
 
 // Watch
-onMounted(async () => {
-  scripts.value = await getScripts();
-});
 
 // Hooks
-
+onMounted(async () => {
+  users.value = await getUsers();
+});
 // Methods
-async function getScripts() {
-  try {
-    const projectId = project.value.id;
-    const { data } = await api.getScripts(projectId);
-    return data;
-  } catch (e) {}
-}
-function addScript(script) {
-  hideDialog();
-  scripts.value.push(script);
-}
-function deleteScript(script) {
-  scripts.value = scripts.value.filter(s => s.id !== script.id);
-}
-function updateScript(script) {
-  const index = scripts.value.findIndex(item => item.id === script.id);
-  if (index < 0) return;
-  scripts.value.splice(index, 1, script);
-}
 function showDialog() {
   dialogIsShow.value = true;
 }
 function hideDialog() {
   dialogIsShow.value = false;
 }
+async function getUsers() {
+  return [
+    {
+      createdAt: '2025-03-24T14:42:57.000Z',
+      updatedAt: '2025-03-24T14:43:07.272Z',
+      lastActiveAt: null,
+      id: 23,
+      userId: 1,
+      projectId: 6,
+      name: 'Artem Mikheev',
+      email: 'artem.mikheev.git@gmail.com',
+    },
+  ];
+  // eslint-disable-next-line no-unreachable
+  try {
+    const projectId = project.value.id;
+    const { data } = await api.getUsers(projectId);
+    return data;
+  } catch (e) {}
+}
+function addProject(project) {
+  hideDialog();
+  users.value.push(project);
+}
 </script>
 
-<style scoped lang="scss">
-.scripts-search {
+<style lang="scss" scoped>
+.users-search {
   width: 100%;
   max-width: 800px;
 }

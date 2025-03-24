@@ -1,22 +1,22 @@
 <template>
   <base-form
     :form="form"
-    class="create-project-form"
+    class="add-user-form"
     @submit="onsubmit"
   >
     <base-form-input
-      v-model="form.title"
+      v-model="form.email"
       dense
       required
-      field="title"
-      :rules="['required']"
-      :label="$t('field.label.project_title')"
-      :placeholder="$t('field.placeholder.project_title')"
+      field="email"
+      rules="email"
+      :label="$t('field.label.email')"
+      :placeholder="$t('field.placeholder.email')"
     />
 
-    <div class="create-project-form__actions">
+    <div class="add-user-form__actions">
       <base-form-submit-btn
-        :label="$t('button.create')"
+        :label="$t('button.add')"
         color="primary"
         unelevated
         no-caps
@@ -42,18 +42,20 @@ import BaseFormSubmitBtn from 'components/base/base-form/base-form-submit-btn/ba
 import BaseForm from 'components/base/base-form/base-form';
 import { ref } from 'vue';
 import useApi from 'src/api';
+import { useProjectStore } from 'src/stores';
 
 // Props
 
 // Emits
-const emits = defineEmits(['create:project']);
+const emits = defineEmits(['add:user']);
 
 // Variables
+const projectStore = useProjectStore();
 const api = useApi();
 
 // Reactive variables
 const form = ref({
-  title: '',
+  email: '',
 });
 const loading = ref(false);
 // Composition
@@ -67,12 +69,13 @@ const loading = ref(false);
 // Methods
 async function onsubmit() {
   loading.value = true;
+  const projectId = projectStore.project.id;
   try {
     const payload = {
-      title: form.value.title,
+      email: form.value.email,
     };
-    const { data } = await api.createProject(payload);
-    emits('create:project', data);
+    const { data } = await api.addUser({ projectId, payload });
+    emits('add:user', data);
   } catch (e) {}
 
   loading.value = false;
@@ -80,7 +83,7 @@ async function onsubmit() {
 </script>
 
 <style lang="scss" scoped>
-.create-project-form {
+.add-user-form {
   display: flex;
   flex-direction: column;
   gap: 8px;

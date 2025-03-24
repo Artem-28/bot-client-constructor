@@ -13,6 +13,7 @@ const pages = {
   projectsPage: () => import('pages/projects-page/projects-page'),
   scriptsPage: () => import('pages/scripts-page/scripts-page'),
   projectSettingsPage: () => import('pages/project-settings-page/project-settings-page'),
+  usersPage: () => import('pages/users-page/users-page'),
 };
 
 const routes = [
@@ -75,6 +76,17 @@ const routes = [
                     path: '',
                     name: 'projectSettings',
                     component: pages.projectSettingsPage(),
+                  },
+                ],
+              },
+              {
+                path: 'users',
+                component: RouterView,
+                children: [
+                  {
+                    path: '',
+                    name: 'users',
+                    component: pages.usersPage(),
                   },
                 ],
               },

@@ -37,7 +37,7 @@ class Api extends ApiInstance {
     return this._get('api/v1/projects');
   }
 
-  getProject({ projectId }) {
+  getProject(projectId) {
     return this._get(`api/v1/projects/${projectId}`);
   }
 
@@ -45,11 +45,11 @@ class Api extends ApiInstance {
     return this._post('api/v1/projects', payload);
   }
 
-  createScript({ projectId }, payload) {
+  createScript({ projectId, payload }) {
     return this._post(`api/v1/projects/${projectId}/scripts`, payload);
   }
 
-  getScripts({ projectId }) {
+  getScripts(projectId) {
     return this._get(`api/v1/projects/${projectId}/scripts`);
   }
 
@@ -61,8 +61,16 @@ class Api extends ApiInstance {
     return this._delete(`api/v1/projects/${projectId}/scripts/${scriptId}`);
   }
 
-  updateScript({ projectId, scriptId }, payload) {
+  updateScript({ projectId, scriptId, payload }) {
     return this._patch(`api/v1/projects/${projectId}/scripts/${scriptId}`, payload);
+  }
+
+  getUsers(projectId) {
+    return this._get(`api/v1/projects/${projectId}/subscribers`);
+  }
+
+  addUser({ projectId, payload }) {
+    return this._post(`api/v1/projects/${projectId}/subscribers`, payload);
   }
 }
 
