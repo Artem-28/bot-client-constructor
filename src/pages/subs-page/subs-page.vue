@@ -1,6 +1,6 @@
 <template>
   <app-page>
-    <app-page-header :title="$t('page.users.title')">
+    <app-page-header :title="$t('page.subs.title')">
       <template #actions>
         <q-input
           v-model="search"
@@ -25,13 +25,13 @@
       </template>
     </app-page-header>
 
-    <users-list :users="users" />
+    <subs-list :subs="subs" @delete:sub="deleteSub" />
 
     <base-dialog
       v-model="dialogIsShow"
-      :title="$t('page.users.add_user')"
+      :title="$t('page.subs.add_user')"
     >
-      <add-user-form @create:project="addProject" />
+      <subscribe-user-form @subscribe="addSub" />
     </base-dialog>
   </app-page>
 </template>
@@ -42,9 +42,9 @@ import useApi from 'src/api';
 import BaseDialog from 'components/base/base-dialog/base-dialog';
 import AppPage from 'components/app/app-page/app-page';
 import AppPageHeader from 'components/app/app-page/app-page-header/app-page-header';
-import AddUserForm from 'components/general/forms/add-user-form/add-user-form';
-import UsersList from 'components/general/users-list/users-list';
 import { useProjectStore } from 'src/stores';
+import SubscribeUserForm from 'components/general/forms/subscribe-user-form/subscribe-user-form';
+import SubsList from 'components/general/subs-list/subs-list';
 
 // Props
 
@@ -55,7 +55,7 @@ const projectStore = useProjectStore();
 const api = useApi();
 
 // Reactive variables
-const users = ref([]);
+const subs = ref([]);
 const search = ref('');
 const dialogIsShow = ref(false);
 
@@ -68,7 +68,7 @@ const project = computed(() => projectStore.project);
 
 // Hooks
 onMounted(async () => {
-  users.value = await getUsers();
+  subs.value = await getSubs();
 });
 // Methods
 function showDialog() {
@@ -77,29 +77,19 @@ function showDialog() {
 function hideDialog() {
   dialogIsShow.value = false;
 }
-async function getUsers() {
-  return [
-    {
-      createdAt: '2025-03-24T14:42:57.000Z',
-      updatedAt: '2025-03-24T14:43:07.272Z',
-      lastActiveAt: null,
-      id: 23,
-      userId: 1,
-      projectId: 6,
-      name: 'Artem Mikheev',
-      email: 'artem.mikheev.git@gmail.com',
-    },
-  ];
-  // eslint-disable-next-line no-unreachable
+async function getSubs() {
   try {
     const projectId = project.value.id;
-    const { data } = await api.getUsers(projectId);
+    const { data } = await api.getSubscribers(projectId);
     return data;
   } catch (e) {}
 }
-function addProject(project) {
+function addSub(sub) {
   hideDialog();
-  users.value.push(project);
+  subs.value.push(sub);
+}
+function deleteSub(sub) {
+  subs.value = subs.value.filter(s => s.id !== sub.id);
 }
 </script>
 

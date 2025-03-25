@@ -12,10 +12,10 @@ export default [
     to: { name: 'scripts' },
   },
   {
-    code: 'users',
+    code: 'subs',
     icon: 'group',
-    label: 'page.users.title',
-    to: { name: 'users' },
+    label: 'page.subs.title',
+    to: { name: 'subs' },
   },
   {
     code: 'project_settings',

@@ -1,6 +1,8 @@
 <template>
   <div class="app-page">
-    <slot />
+    <div class="app-page__content">
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -29,11 +31,16 @@
 .app-page {
   height: 100%;
   width: 100%;
-  padding: 24px 16px;
-  background-color: $bg-primary;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  border-radius: 8px;
+  padding: 40px 32px;
+  &__content {
+    height: 100%;
+    width: 100%;
+    padding: 24px 16px;
+    background-color: $bg-primary;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    border-radius: 8px;
+  }
 }
 </style>

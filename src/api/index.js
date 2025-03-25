@@ -65,12 +65,16 @@ class Api extends ApiInstance {
     return this._patch(`api/v1/projects/${projectId}/scripts/${scriptId}`, payload);
   }
 
-  getUsers(projectId) {
+  getSubscribers(projectId) {
     return this._get(`api/v1/projects/${projectId}/subscribers`);
   }
 
-  addUser({ projectId, payload }) {
+  addSubscriber({ projectId, payload }) {
     return this._post(`api/v1/projects/${projectId}/subscribers`, payload);
+  }
+
+  deleteSubscriber({ projectId, subId }) {
+    return this._delete(`api/v1/projects/${projectId}/subscribers/${subId}`);
   }
 }
 

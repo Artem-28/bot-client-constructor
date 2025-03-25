@@ -50,7 +50,6 @@ onBeforeMount(() => (showDrawer.value = !route.meta?.root));
   }
   &__page-content {
     height: 100%;
-    padding: 40px 32px;
   }
 }
 </style>

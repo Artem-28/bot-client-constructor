@@ -32,11 +32,14 @@ export default {
     project_settings: {
       title: 'Настройки проекта',
     },
-    users: {
+    subs: {
       title: 'Пользователи',
       add_user: 'Добавление пользователя',
       delete_user: 'Удаление пользователя',
       delete_user_confirm: 'Вы действительно хотите удалить пользователя из проекта?',
+    },
+    sub: {
+      title: 'Информация о пользователе',
     },
   },
   field: {

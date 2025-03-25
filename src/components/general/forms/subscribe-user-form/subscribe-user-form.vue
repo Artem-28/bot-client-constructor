@@ -47,7 +47,7 @@ import { useProjectStore } from 'src/stores';
 // Props
 
 // Emits
-const emits = defineEmits(['add:user']);
+const emits = defineEmits(['subscribe']);
 
 // Variables
 const projectStore = useProjectStore();
@@ -74,8 +74,8 @@ async function onsubmit() {
     const payload = {
       email: form.value.email,
     };
-    const { data } = await api.addUser({ projectId, payload });
-    emits('add:user', data);
+    const { data } = await api.addSubscriber({ projectId, payload });
+    emits('subscribe', data);
   } catch (e) {}
 
   loading.value = false;

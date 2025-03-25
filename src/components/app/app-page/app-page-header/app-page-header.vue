@@ -5,7 +5,7 @@
         <span v-text="title"  />
       </slot>
     </h1>
-    <div class="app-page-header__actions">
+    <div v-if="$slots.actions" class="app-page-header__actions">
       <slot name="actions" />
     </div>
   </header>
@@ -40,6 +40,7 @@ defineProps({
 
 <style scoped lang="scss">
 .app-page-header {
+  white-space: nowrap;
   display: flex;
   align-items: center;
   width: 100%;
