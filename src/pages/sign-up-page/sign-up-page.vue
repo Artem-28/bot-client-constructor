@@ -170,7 +170,7 @@ async function sendConfirmMessage() {
   try {
     const { data } = await api.signUpConfirmMessage(payload);
     if (!data) return;
-    codeLiveTime.value = moment(data.liveAt) - moment();
+    codeLiveTime.value = moment(data.live_at) - moment();
     startTimer();
   } catch (e) {
     throw new Error(e);

@@ -76,6 +76,10 @@ class Api extends ApiInstance {
   deleteSubscriber({ projectId, subId }) {
     return this._delete(`api/v1/projects/${projectId}/subscribers/${subId}`);
   }
+
+  getPermissionsList() {
+    return this._get('api/v1/permissions');
+  }
 }
 
 const api = new Api();

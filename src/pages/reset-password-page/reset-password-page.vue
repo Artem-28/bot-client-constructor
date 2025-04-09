@@ -67,7 +67,7 @@ async function onsubmit() {
   try {
     const payload = {
       password: form.value.password,
-      confirmPassword: form.value.confirmPassword,
+      confirm_password: form.value.confirmPassword,
     };
     await api.resetPassword(payload);
     localStorage.setItem('accessToken', '');

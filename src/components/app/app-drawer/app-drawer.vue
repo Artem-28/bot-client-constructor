@@ -30,8 +30,8 @@
       >
         <q-item
           :to="item.to"
-          exact
-          exact-active-class="app-drawer-item--active"
+          :exact="item.code === 'projects'"
+          active-class="app-drawer-item--active"
           class="app-drawer-item"
         >
           <q-item-section avatar class="app-drawer-item__section">
@@ -54,14 +54,16 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue';
+import appDrawerMenu from 'components/app/app-drawer/app-drawer-menu';
+import { useRoute } from 'vue-router';
+
 // Props
 
 // Emits
 
 // Variables
-import { computed, ref } from 'vue';
-import appDrawerMenu from 'components/app/app-drawer/app-drawer-menu';
-
+const route = useRoute();
 const drawer = ref(false);
 const isMini = ref(true);
 
@@ -79,6 +81,11 @@ const widthControlIcon = computed(() => isMini.value ? 'chevron_right' : 'chevro
 // Methods
 function toggleMini() {
   isMini.value = !isMini.value;
+}
+// eslint-disable-next-line no-unused-vars
+function isActive(item) {
+  console.log('item', item);
+  console.log('route', route);
 }
 </script>
 

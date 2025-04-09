@@ -39,7 +39,14 @@ export default {
       delete_user_confirm: 'Вы действительно хотите удалить пользователя из проекта?',
     },
     sub: {
-      title: 'Информация о пользователе',
+      title: {
+        info: 'Информация о пользователе',
+        rights: 'Права пользователя',
+      },
+      tabs: {
+        info: 'Информация',
+        rights: 'Права',
+      },
     },
   },
   field: {
@@ -104,5 +111,23 @@ export default {
   },
   account: {
     logout: 'Выйти',
+  },
+  permissions: {
+    write_project: 'Изминение проекта',
+    access_script: 'Управление сценариями',
+    read_script: 'Просмотр сценариев',
+    write_script: 'Изминение сценариев',
+    remove_script: 'Удаление сценариев',
+    access_permission: 'Управление правами пользователей',
+    read_permission: 'Просмотр прав пользователей',
+    write_permission: 'Изминение прав пользователей',
+    access_subscriber: 'Управление пользователями',
+    create_subscriber: 'Добавление пользователей',
+    remove_subscriber: 'Удаление пользователей',
+    read_subscriber: 'Просмотр пользователей',
+    access_respondent: 'Управление респондетнами',
+    read_respondent: 'Просмотр респондетнов',
+    write_respondent: 'Изминение респондетнов',
+    remove_respondent: 'Изминение респондетнов',
   },
 };
