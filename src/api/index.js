@@ -69,6 +69,10 @@ class Api extends ApiInstance {
     return this._get(`api/v1/projects/${projectId}/subscribers`);
   }
 
+  getSubscriber({ projectId, subId }) {
+    return this._get(`api/v1/projects/${projectId}/subscribers/${subId}`);
+  }
+
   addSubscriber({ projectId, payload }) {
     return this._post(`api/v1/projects/${projectId}/subscribers`, payload);
   }
@@ -79,6 +83,14 @@ class Api extends ApiInstance {
 
   getPermissionsList() {
     return this._get('api/v1/permissions');
+  }
+
+  getUserPermissions({ projectId, userId }) {
+    return this._get(`api/v1/projects/${projectId}/users/${userId}/permissions`);
+  }
+
+  updatePermissions({ projectId, userId, payload }) {
+    return this._put(`api/v1/projects/${projectId}/users/${userId}/permissions`, payload);
   }
 }
 

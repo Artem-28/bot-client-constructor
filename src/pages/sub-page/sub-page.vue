@@ -17,13 +17,13 @@
         <span v-text="$t(tab.label)" />
       </q-tab>
     </q-tabs>
-    <q-tab-panels v-model="tab" class="sub-page-panels">
+    <q-tab-panels v-if="sub" v-model="tab" class="sub-page-panels">
       <q-tab-panel :name="subTabs.info.name" class="q-pa-none">
         <sub-info />
       </q-tab-panel>
 
       <q-tab-panel :name="subTabs.rights.name" class="sub-page-panel">
-        <sub-rights />
+        <sub-rights :sub="sub" />
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -34,15 +34,21 @@ import subTabs from 'pages/sub-page/sub-tabs';
 import { useQueryModel } from 'src/composable/use-query-model.composable';
 import SubInfo from 'components/general/sub-tab-panels/sub-info/sub-info';
 import SubRights from 'components/general/sub-tab-panels/sub-rights/sub-rights';
+import useApi from 'src/api';
+import { useRoute } from 'vue-router';
+import { onBeforeMount, ref } from 'vue';
 
 // Props
 
 // Emits
 
 // Variables
+const api = useApi();
+const route = useRoute();
 
 // Reactive variables
 const { model: tab } = useQueryModel('tab', subTabs.info.name);
+const sub = ref(null);
 
 // Composition
 
@@ -51,8 +57,20 @@ const { model: tab } = useQueryModel('tab', subTabs.info.name);
 // Watch
 
 // Hooks
+onBeforeMount(async () => {
+  const { project_id, sub_id } = route.params;
+  sub.value = await getSub(project_id, sub_id);
+});
 
 // Methods
+async function getSub(projectId, subId) {
+  try {
+    const { data } = await api.getSubscriber({ projectId, subId });
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
 
 </script>
 
