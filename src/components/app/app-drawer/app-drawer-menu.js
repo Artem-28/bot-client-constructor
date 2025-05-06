@@ -18,6 +18,12 @@ export default [
     to: { name: 'subs' },
   },
   {
+    code: 'messages',
+    icon: 'mail',
+    label: 'page.messages.title',
+    to: { name: 'messages' },
+  },
+  {
     code: 'project_settings',
     icon: 'settings',
     label: 'page.project_settings.title',

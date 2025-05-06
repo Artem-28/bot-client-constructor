@@ -15,6 +15,7 @@ const pages = {
   projectSettingsPage: () => import('pages/project-settings-page/project-settings-page'),
   subsPage: () => import('pages/subs-page/subs-page'),
   subPage: () => import('pages/sub-page/sub-page'),
+  messagesPage: () => import('pages/messages-page/messages-page'),
 };
 
 const routes = [
@@ -99,6 +100,17 @@ const routes = [
                         component: pages.subPage(),
                       },
                     ],
+                  },
+                ],
+              },
+              {
+                path: 'messages',
+                component: RouterView,
+                children: [
+                  {
+                    path: '',
+                    name: 'messages',
+                    component: pages.messagesPage(),
                   },
                 ],
               },
