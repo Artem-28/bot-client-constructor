@@ -89,6 +89,10 @@ class Api extends ApiInstance {
     return this._get(`api/v1/projects/${projectId}/users/${userId}/permissions`);
   }
 
+  getPermissions(projectId) {
+    return this._get(`api/v1/projects/${projectId}/permissions`);
+  }
+
   updatePermissions({ projectId, userId, payload }) {
     return this._put(`api/v1/projects/${projectId}/users/${userId}/permissions`, payload);
   }

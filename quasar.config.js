@@ -7,6 +7,7 @@ module.exports = configure(function(/* ctx */) {
       'i18n',
       'axios',
       'form-rules',
+      'check-permission',
     ],
     css: [
       'app.scss',

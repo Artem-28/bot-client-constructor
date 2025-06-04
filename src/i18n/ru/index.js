@@ -1,5 +1,8 @@
 export default {
   page: {
+    forbidden: {
+      title: 'Доступ запрещен',
+    },
     login: {
       title: 'Вход',
       not_account: 'Нет аккаунта?',

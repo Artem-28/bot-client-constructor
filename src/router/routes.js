@@ -1,4 +1,5 @@
 import { RouterView } from 'vue-router';
+import { checkPermission } from 'boot/check-permission';
 
 const layouts = {
   mainLayout: () => import('layouts/main-layout/main-layout'),
@@ -16,6 +17,7 @@ const pages = {
   subsPage: () => import('pages/subs-page/subs-page'),
   subPage: () => import('pages/sub-page/sub-page'),
   messagesPage: () => import('pages/messages-page/messages-page'),
+  forbiddenPage: () => import('pages/forbidden-page/forbidden-page'),
 };
 
 const routes = [
@@ -38,6 +40,20 @@ const routes = [
     component: layouts.mainLayout,
     meta: { authorized: true },
     children: [
+      {
+        path: '/forbidden',
+        component: RouterView,
+        children: [
+          {
+            path: '',
+            name: 'forbidden',
+            component: pages.forbiddenPage,
+            meta: {
+              root: true,
+            },
+          },
+        ],
+      },
       {
         path: '/projects',
         component: RouterView,
@@ -78,6 +94,9 @@ const routes = [
                     path: '',
                     name: 'projectSettings',
                     component: pages.projectSettingsPage(),
+                    meta: {
+                      accessRoles: projectId => checkPermission(projectId, ['write_project']),
+                    },
                   },
                 ],
               },
