@@ -1,6 +1,6 @@
 <template>
   <div class="app-header-user">
-    <base-avatar :user="user" rounded />
+    <base-avatar :item="user" title-key="name" rounded />
     <div class="user-info">
       <div class="cursor-pointer">
         <span v-text="user.name" class="text-bold" />

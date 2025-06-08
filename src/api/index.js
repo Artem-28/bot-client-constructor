@@ -96,6 +96,18 @@ class Api extends ApiInstance {
   updatePermissions({ projectId, userId, payload }) {
     return this._put(`api/v1/projects/${projectId}/users/${userId}/permissions`, payload);
   }
+
+  getMessengers(projectId) {
+    return this._get(`api/v1/projects/${projectId}/messengers`);
+  }
+
+  getSessions({ projectId, scriptId }) {
+    return this._get(`api/v1/projects/${projectId}/messengers/${scriptId}/sessions`);
+  }
+
+  getHistoryMessage({ projectId, scriptId, sessionId }) {
+    return this._get(`api/v1/projects/${projectId}/messengers/${scriptId}/sessions/${sessionId}/history`);
+  }
 }
 
 const api = new Api();

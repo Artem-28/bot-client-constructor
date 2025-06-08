@@ -15,7 +15,7 @@ import { computed } from 'vue';
 
 // Props
 const props = defineProps({
-  user: {
+  item: {
     type: Object,
     required: true,
   },
@@ -26,6 +26,10 @@ const props = defineProps({
   square: {
     type: Boolean,
     default: false,
+  },
+  titleKey: {
+    type: String,
+    default: 'title',
   },
 });
 // Emits
@@ -38,11 +42,20 @@ const props = defineProps({
 
 // Computed
 const hasImage = computed(() => false);
-const abbreviation = computed(() => {
-  const nameParts = props.user.name.split(' ');
-  let str = nameParts[0][0];
+const titleParts = computed(() => {
+  const title = props.item[props.titleKey];
+  if (typeof title !== 'string') return [];
 
-  if (nameParts.length > 1) str += nameParts[nameParts.length - 1][0];
+  const parts = title.split(' ');
+  parts.splice(2, parts.length);
+  return parts;
+});
+const abbreviation = computed(() => {
+  let str = '';
+
+  titleParts.value.forEach(item => {
+    str += item[0];
+  });
 
   return str;
 });
@@ -74,6 +87,7 @@ const abbreviationStyle = computed(() => {
 
 <style lang="scss" scoped>
 .avatar {
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;

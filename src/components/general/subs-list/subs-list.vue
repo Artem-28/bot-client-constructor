@@ -8,7 +8,7 @@
     @click:item="subClickHandle"
   >
     <template #cell:avatar="{ item }">
-      <base-avatar :user="item" />
+      <base-avatar :item="item" title-key="name" />
     </template>
 
     <template #cell:createdAt="{ value }">

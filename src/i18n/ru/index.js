@@ -1,4 +1,24 @@
 export default {
+  menu: {
+    projects: {
+      title: 'Проекты',
+    },
+    scripts: {
+      title: 'Сценарии',
+    },
+    users: {
+      title: 'Пользователи',
+    },
+    messages: {
+      title: 'Сообщения',
+    },
+    project_settings: {
+      title: 'Настройки проекта',
+    },
+  },
+  days: {
+    shorts: ['Вс.', 'Пн.', 'Вт.', 'Ср.', 'Чт.', 'Пт.', 'Сб.'],
+  },
   page: {
     forbidden: {
       title: 'Доступ запрещен',
@@ -63,6 +83,7 @@ export default {
       search: 'Поиск',
       project_title: 'Введите название проекта',
       script_title: 'Введите название сценария',
+      message: 'Сообщение...',
     },
     label: {
       email: 'Email',
@@ -132,5 +153,11 @@ export default {
     read_respondent: 'Просмотр респондетнов',
     write_respondent: 'Изминение респондетнов',
     remove_respondent: 'Изминение респондетнов',
+  },
+  respondent: {
+    unknown: 'Неизвестный респондент',
+    fields: {
+      respondent_id: 'Индификатор респондента',
+    },
   },
 };

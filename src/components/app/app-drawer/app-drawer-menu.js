@@ -2,31 +2,31 @@ export default [
   {
     code: 'projects',
     icon: 'grid_view',
-    label: 'page.projects.title',
+    label: 'menu.projects.title',
     to: { name: 'projects' },
   },
   {
     code: 'scripts',
     icon: 'sync_alt',
-    label: 'page.scripts.title',
+    label: 'menu.scripts.title',
     to: { name: 'scripts' },
   },
   {
     code: 'subs',
     icon: 'group',
-    label: 'page.subs.title',
+    label: 'menu.users.title',
     to: { name: 'subs' },
   },
   {
     code: 'messages',
     icon: 'mail',
-    label: 'page.messages.title',
+    label: 'menu.messages.title',
     to: { name: 'messages' },
   },
   {
     code: 'project_settings',
     icon: 'settings',
-    label: 'page.project_settings.title',
+    label: 'menu.project_settings.title',
     to: { name: 'projectSettings' },
   },
 ];
