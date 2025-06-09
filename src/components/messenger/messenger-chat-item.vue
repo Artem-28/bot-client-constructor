@@ -33,7 +33,7 @@
           class="text-color--primary text-bold"
           v-text="`${authorName}: `"
         />
-        <span class="text-color--gray" v-text="lastMessage.text" />
+        <span v-if="lastMessage" class="text-color--gray" v-text="lastMessage.text" />
       </div>
     </div>
   </div>
@@ -67,18 +67,11 @@ const i18n = useI18n();
 // Reactive variables
 const messenger = inject(MessengerKey, {});
 
-const respondent = messenger.getRespondent(props.session.respondent_id);
-const messages = messenger.getMessages(props.session.id);
-
 // Composition
+const lastMessage = messenger.getLastMessage(props.session.id);
+const respondent = messenger.getRespondent(props.session.respondent_id);
 
 // Computed
-const lastMessage = computed(() => {
-  const messagesCount = messages.value.length;
-  if (messagesCount === 0) return null;
-  return messages.value[messagesCount - 1];
-});
-
 const respondentName = computed(() => {
   const name = respondent.value?.name;
   if (name === 'respondent.new') return i18n.t('respondent.unknown');
@@ -93,7 +86,7 @@ const title = computed(() => {
 
 const avatar = computed(() => {
   return {
-    title: props.title || respondentName.value,
+    title: title.value,
   };
 });
 

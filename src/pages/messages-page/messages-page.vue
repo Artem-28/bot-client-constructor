@@ -16,7 +16,17 @@
       <messenger-session-list />
     </template>
 
-    <messenger-content />
+    <messenger-bubbles-group
+      v-for="n in groupsCount"
+      :key="messenger.messageGroups.value[groupsCount - n].date"
+      :group="messenger.messageGroups.value[groupsCount - n]"
+    >
+
+      <template v-slot:default="{ item }">
+        <pre>{{ item }}</pre>
+      </template>
+
+    </messenger-bubbles-group>
 
     <template v-slot:footer>
       <messenger-panel />
@@ -29,13 +39,13 @@
 import MessengerTemplate from 'components/messenger/messenger-template';
 import MessengerGroupList from 'components/messenger/messenger-group-list';
 import { useMessenger } from 'components/messenger/use-messenger.composable';
-import { provide } from 'vue';
+import { computed, provide } from 'vue';
 import { MessengerKey } from 'src/utils/symbols.util';
 import MessengerSessionList from 'components/messenger/messenger-session-list';
 import MessengerSessionHeader from 'components/messenger/messenger-session-header';
-import MessengerContent from 'components/messenger/messenger-content';
 import MessengerPanel from 'components/messenger/messenger-panel';
 import MessengerGroupHeader from 'components/messenger/messenger-group-header';
+import MessengerBubblesGroup from 'components/messenger/messenger-bubbles-group';
 // Props
 
 // Emits
@@ -44,6 +54,7 @@ import MessengerGroupHeader from 'components/messenger/messenger-group-header';
 
 // Reactive variables
 const messenger = useMessenger();
+const groupsCount = computed(() => messenger.messageGroups.value.length);
 
 provide(MessengerKey, messenger);
 

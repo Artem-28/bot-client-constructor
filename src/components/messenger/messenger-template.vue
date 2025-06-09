@@ -1,9 +1,7 @@
 <template>
   <div class="messenger-template bg-color--secondary">
     <q-layout view="hHh Lpr lff" container>
-      <q-page class="bg-color--white">
-        <q-resize-observer @resize="resizeMenu" />
-
+      <q-page ref="menuRef" class="bg-color--white">
         <section :style="heightStyle" class="messenger-section">
           <slot name="menu-header" />
 
@@ -34,7 +32,10 @@
     <section :style="heightStyle" class="messenger-section">
       <slot name="header" />
 
-      <div class="messenger-section__content">
+      <div
+        ref="contentRef"
+        class="messenger-section__content messages-container"
+      >
         <slot />
       </div>
 
@@ -44,40 +45,59 @@
 </template>
 
 <script setup>
-
 import { computed, provide, ref } from 'vue';
 import { MessengerTemplateKey } from 'src/utils/symbols.util';
+import { useConfirm, useResizeObserver, useScroll } from 'src/composable';
+// Props
 
+// Emits
+
+// Variables
+
+// Reactive variables
 const drawer = ref(false);
+const contentRef = ref(null);
+const menuRef = ref(null);
 const menuSize = ref({ width: 0, height: 0 });
-let hideExecutor = null;
 
+// Composition
+const { confirm: confirmHideMenu, accept: acceptHideMenu } = useConfirm();
+const { scrollPosition } = useScroll(contentRef);
+
+useResizeObserver(menuRef, (size) => {
+  menuSize.value.width = size.width;
+  menuSize.value.height = size.height;
+});
+
+// Computed
 const heightStyle = computed(() => {
   return { height: `${menuSize.value.height}px` };
 });
 
-function resizeMenu(size) {
-  menuSize.value.width = size.width;
-  menuSize.value.height = size.height;
-}
+// Watch
 
+// Hooks
+
+// Methods
 function openDrawer() {
   drawer.value = true;
 }
 
 function closeDrawer() {
   drawer.value = false;
-  return new Promise((resolve) => {
-    hideExecutor = resolve;
-  });
+  return confirmHideMenu();
 }
 
 function onHideDrawer() {
-  if (typeof hideExecutor !== 'function') return;
-  hideExecutor();
+  acceptHideMenu(true);
 }
 
-provide(MessengerTemplateKey, { openDrawer, closeDrawer });
+provide(MessengerTemplateKey, {
+  openDrawer,
+  closeDrawer,
+  scrollPosition,
+  contentRef,
+});
 </script>
 
 <style scoped lang="scss">
@@ -98,5 +118,9 @@ provide(MessengerTemplateKey, { openDrawer, closeDrawer });
     overflow-x: hidden;
     margin: auto 0;
   }
+}
+.messages-container {
+  display: flex;
+  flex-direction: column-reverse;
 }
 </style>

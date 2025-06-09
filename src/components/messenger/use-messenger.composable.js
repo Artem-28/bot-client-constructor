@@ -1,6 +1,7 @@
 import useApi from 'src/api';
 import { useProjectStore } from 'src/stores';
 import { computed, ref } from 'vue';
+import moment from 'moment';
 
 export const useMessenger = () => {
   const api = useApi();
@@ -9,6 +10,7 @@ export const useMessenger = () => {
   const groupMap = ref(new Map());
   const sessionMap = ref(new Map());
   const respondentMap = ref(new Map());
+  const sessionMessageGroupMap = ref(new Map());
   const sessionMessagesMap = ref(new Map());
   const operatorMap = ref(new Map());
 
@@ -25,8 +27,10 @@ export const useMessenger = () => {
     return sessionMap.value.get(active.value.sessionId);
   });
 
-  const messages = computed(() => {
-    return sessionMessagesMap.value.get(active.value.sessionId) || [];
+  const messageGroups = computed(() => {
+    const groups = sessionMessageGroupMap.value.get(active.value.sessionId);
+    if (!groups) return [];
+    return Array.from(groups.values() || []);
   });
 
   const lastSessions = computed(() => {
@@ -62,8 +66,22 @@ export const useMessenger = () => {
     });
   }
 
-  function getMessages(sessionId) {
-    return computed(() => sessionMessagesMap.value.get(sessionId) || []);
+  function getLastMessage(sessionId) {
+    return computed(() => {
+      const groups = sessionMessageGroupMap.value.get(sessionId);
+      let lastTimestamp = null;
+
+      Array.from(groups.keys()).forEach(timestamp => {
+        if (!lastTimestamp || lastTimestamp < timestamp) {
+          lastTimestamp = timestamp;
+        }
+      });
+
+      const messages = groups.get(lastTimestamp)?.messages || [];
+      if (messages.length === 0) return null;
+
+      return messages[messages.length - 1];
+    });
   }
 
   function setActiveGroup(groupId) {
@@ -82,15 +100,31 @@ export const useMessenger = () => {
     active.value.sessionId = null;
   }
 
+  function groupDate(message) {
+    return new Date(moment(message.created_at).format('YYYY/MM/DD'));
+  }
+
   function setMessage(data) {
     const { operator, ...message } = data;
+
     if (operator) {
       operatorMap.value.set(operator.id, operator);
     }
-    if (!sessionMessagesMap.value.has(message.session_id)) {
-      sessionMessagesMap.value.set(message.session_id, []);
+
+    const date = groupDate(message);
+    const groupKey = date.getTime();
+
+    if (!sessionMessageGroupMap.value.has(message.session_id)) {
+      sessionMessageGroupMap.value.set(message.session_id, new Map());
     }
-    sessionMessagesMap.value.get(message.session_id).push(message);
+
+    const groups = sessionMessageGroupMap.value.get(message.session_id);
+
+    if (!groups.has(groupKey)) {
+      groups.set(groupKey, { date, messages: [] });
+    }
+
+    groups.get(groupKey).messages.push(message);
   }
 
   function setSession(data) {
@@ -141,13 +175,14 @@ export const useMessenger = () => {
   return {
     activeGroup,
     activeSession,
-    messages,
+    messageGroups,
     lastSessions,
+    sessionMessageGroupMap,
     loadMessengers,
     loadSessions,
     getSessions,
     getRespondent,
-    getMessages,
+    getLastMessage,
     getOperator,
     getGroup,
     setActiveGroup,
