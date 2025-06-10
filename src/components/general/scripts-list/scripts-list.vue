@@ -5,6 +5,7 @@
     :items="scripts"
     clickable
     grid-columns="1fr 60px"
+    @click:item="selectScript"
   >
     <template #cell:controls="{ item }">
       <div class="script-controls">
@@ -12,6 +13,7 @@
           name="more_horiz"
           size="20px"
           class="cursor-pointer"
+          @click.stop
         >
           <q-menu :offset="[0, 14]">
             <script-menu @command="c => commandHandle(c, item)" />
@@ -55,6 +57,7 @@ import { useConfirm } from 'src/composable';
 import RenameScriptForm from 'components/general/forms/rename-script-form/rename-script-form';
 import { useI18n } from 'vue-i18n';
 import { useProjectStore } from 'src/stores';
+import { useRouter } from 'vue-router';
 
 // Props
 defineProps({
@@ -70,6 +73,7 @@ const emits = defineEmits(['update:script', 'delete:script']);
 // Variables
 const projectStore = useProjectStore();
 const api = useApi();
+const router = useRouter();
 const { t } = useI18n();
 const columns = [
   { name: 'title', label: t('base.title') },
@@ -99,6 +103,11 @@ async function renameScriptHandle(item) {
 function renameScript(script) {
   renameDialog.value = false;
   emits('update:script', script);
+}
+function selectScript(script) {
+  const { id } = script;
+  router.push({ name: 'script', params: { script_id: id } });
+  console.log('id', id);
 }
 async function deleteScriptHandle(item) {
   deleteDialog.value = true;

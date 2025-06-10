@@ -18,6 +18,7 @@ const pages = {
   subPage: () => import('pages/sub-page/sub-page'),
   messagesPage: () => import('pages/messages-page/messages-page'),
   forbiddenPage: () => import('pages/forbidden-page/forbidden-page'),
+  constructorPage: () => import('pages/constructor-page/constructor-page'),
 };
 
 const routes = [
@@ -82,7 +83,18 @@ const routes = [
                   {
                     path: '',
                     name: 'scripts',
-                    component: pages.scriptsPage(),
+                    component: pages.scriptsPage,
+                  },
+                  {
+                    path: ':script_id',
+                    component: RouterView,
+                    children: [
+                      {
+                        path: '',
+                        name: 'script',
+                        component: pages.constructorPage,
+                      },
+                    ],
                   },
                 ],
               },
@@ -93,7 +105,7 @@ const routes = [
                   {
                     path: '',
                     name: 'projectSettings',
-                    component: pages.projectSettingsPage(),
+                    component: pages.projectSettingsPage,
                     meta: {
                       accessRoles: projectId => checkPermission(projectId, ['write_project']),
                     },
@@ -107,7 +119,7 @@ const routes = [
                   {
                     path: '',
                     name: 'subs',
-                    component: pages.subsPage(),
+                    component: pages.subsPage,
                   },
                   {
                     path: ':sub_id',
@@ -116,7 +128,7 @@ const routes = [
                       {
                         path: '',
                         name: 'sub',
-                        component: pages.subPage(),
+                        component: pages.subPage,
                       },
                     ],
                   },
@@ -129,7 +141,7 @@ const routes = [
                   {
                     path: '',
                     name: 'messages',
-                    component: pages.messagesPage(),
+                    component: pages.messagesPage,
                   },
                 ],
               },
