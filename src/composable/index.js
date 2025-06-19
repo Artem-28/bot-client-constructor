@@ -6,6 +6,7 @@ import useConfirm from 'src/composable/use-confirm.composable';
 import useTimeout from 'src/composable/use-timeout.composable';
 import useResizeObserver from 'src/composable/use-resize-observer.composable';
 import useScroll from 'src/composable/use-scroll.composable';
+import { useToggle, useModelToggleEmits } from 'src/composable/use-toggle.composable';
 
 export {
   useValidateField,
@@ -16,4 +17,6 @@ export {
   useTimeout,
   useResizeObserver,
   useScroll,
+  useToggle,
+  useModelToggleEmits,
 };

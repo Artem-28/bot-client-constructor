@@ -1,53 +1,70 @@
 <template>
-  <div class="messenger-template bg-color--secondary">
-    <q-layout view="hHh Lpr lff" container>
-      <q-page ref="menuRef" class="bg-color--white">
-        <section :style="heightStyle" class="messenger-section">
-          <slot name="menu-header" />
+  <div ref="rootRef" class="messenger-template bg-color--secondary">
+    <base-section view="hhr Lpr ffr" class="bg-color--white">
+      <base-section-header>
+        <slot name="left-header" />
+      </base-section-header>
 
-          <div class="messenger-section__content">
-            <slot name="menu-content" />
-          </div>
-        </section>
-      </q-page>
+      <base-section-container>
+        <div class="messenger-template__content hide-scrollbar">
+          <slot name="left" />
+        </div>
+      </base-section-container>
 
-      <q-drawer
-        v-model="drawer"
+      <base-drawer
+        v-model="drawer.left"
         side="right"
-        :width="menuSize.width"
-        :breakpoint="0"
+        fill
         overlay
-        @hide="onHideDrawer"
+        @hide="hideDrawer.left.accept"
       >
-        <section :style="heightStyle" class="messenger-section">
-          <slot name="drawer-header" />
+        <base-section>
+          <base-section-header>
+            <slot name="left-drawer-header" />
+          </base-section-header>
 
-          <div class="messenger-section__content">
-            <slot name="drawer-content" />
-          </div>
-        </section>
-      </q-drawer>
-    </q-layout>
+          <base-section-container>
+            <div class="messenger-template__content hide-scrollbar">
+              <slot name="left-drawer" />
+            </div>
+          </base-section-container>
+        </base-section>
+      </base-drawer>
+    </base-section>
 
-    <section :style="heightStyle" class="messenger-section">
-      <slot name="header" />
+    <base-section view="hHr Lpr fFr">
+      <base-section-header class="bg-color--white">
+        <slot name="header" />
+      </base-section-header>
 
-      <div
-        ref="contentRef"
-        class="messenger-section__content messages-container"
-      >
-        <slot />
-      </div>
+      <base-section-container>
+        <div
+          ref="contentRef"
+          class="messenger-template__content messages-container hide-scrollbar"
+        >
+          <slot/>
+        </div>
+      </base-section-container>
 
-      <slot name="footer" />
-    </section>
+      <base-drawer v-model="drawer.right" side="right" />
+
+      <base-section-footer class="bg-color--white">
+        <slot name="footer" />
+      </base-section-footer>
+    </base-section>
   </div>
 </template>
 
 <script setup>
-import { computed, provide, ref } from 'vue';
+import { provide, ref } from 'vue';
+import { useConfirm, useScroll } from 'src/composable';
 import { MessengerTemplateKey } from 'src/utils/symbols.util';
-import { useConfirm, useResizeObserver, useScroll } from 'src/composable';
+import BaseSectionFooter from 'components/base/base-section-footer/base-section-footer';
+import BaseSection from 'components/base/base-section/base-section';
+import BaseDrawer from 'components/base/base-drawer/base-drawer';
+import BaseSectionContainer from 'components/base/base-section-container/base-section-container';
+import BaseSectionHeader from 'components/base/base-section-header/base-section-header';
+
 // Props
 
 // Emits
@@ -55,44 +72,37 @@ import { useConfirm, useResizeObserver, useScroll } from 'src/composable';
 // Variables
 
 // Reactive variables
-const drawer = ref(false);
+const drawer = ref({
+  left: false,
+  right: true,
+});
 const contentRef = ref(null);
-const menuRef = ref(null);
-const menuSize = ref({ width: 0, height: 0 });
 
 // Composition
-const { confirm: confirmHideMenu, accept: acceptHideMenu } = useConfirm();
 const { scrollPosition } = useScroll(contentRef);
-
-useResizeObserver(menuRef, (size) => {
-  menuSize.value.width = size.width;
-  menuSize.value.height = size.height;
-});
+const hideDrawer = {
+  left: useConfirm(),
+  right: useConfirm(),
+};
 
 // Computed
-const heightStyle = computed(() => {
-  return { height: `${menuSize.value.height}px` };
-});
 
 // Watch
 
 // Hooks
 
 // Methods
-function openDrawer() {
-  drawer.value = true;
+function openDrawer(side = 'left') {
+  drawer.value[side] = true;
 }
 
-function closeDrawer() {
-  drawer.value = false;
-  return confirmHideMenu();
-}
-
-function onHideDrawer() {
-  acceptHideMenu(true);
+function closeDrawer(side = 'left') {
+  drawer.value[side] = false;
+  return hideDrawer[side].confirm();
 }
 
 provide(MessengerTemplateKey, {
+  drawer,
   openDrawer,
   closeDrawer,
   scrollPosition,
@@ -102,21 +112,14 @@ provide(MessengerTemplateKey, {
 
 <style scoped lang="scss">
 .messenger-template {
-  display: grid;
-  grid-template-columns: 35% 1fr;
   width: 100%;
   height: 100%;
-}
-.messenger-section {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 1fr;
   &__content {
     width: 100%;
     height: 100%;
     overflow: auto;
-    overflow-x: hidden;
-    margin: auto 0;
   }
 }
 .messages-container {

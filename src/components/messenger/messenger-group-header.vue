@@ -1,5 +1,5 @@
 <template>
-  <header class="messenger-group-header">
+  <div class="messenger-group-header">
     <q-input
       v-model="search"
       outlined
@@ -11,7 +11,7 @@
         <q-icon name="search" />
       </template>
     </q-input>
-  </header>
+  </div>
 </template>
 
 <script setup>

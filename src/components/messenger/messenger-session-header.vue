@@ -36,7 +36,7 @@ const title = computed(() => messenger.activeGroup.value?.title || '');
 
 // Methods
 async function backHandler() {
-  await template.closeDrawer();
+  await template.closeDrawer('left');
   messenger.clearActiveGroup();
 }
 </script>

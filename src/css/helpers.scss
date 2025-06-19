@@ -77,3 +77,30 @@
     }
   }
 }
+
+.hide-scrollbar {
+  /* Скрываем scrollbar для Chrome, Safari и Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Скрываем scrollbar для IE, Edge и Firefox */
+  -ms-overflow-style: none;  /* IE и Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.separator {
+  border: 1px solid $separator-primary-color;
+  &--left {
+    border-left: 1px solid $separator-primary-color;
+  }
+  &--right {
+    border-right: 1px solid $separator-primary-color;
+  }
+  &--bottom {
+    border-bottom: 1px solid $separator-primary-color;
+  }
+  &--top {
+    border-top: 1px solid $separator-primary-color;
+  }
+}

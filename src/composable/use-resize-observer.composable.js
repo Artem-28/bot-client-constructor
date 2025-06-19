@@ -1,22 +1,22 @@
-import { nextTick, onBeforeUnmount, onMounted } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useTimeout } from 'src/composable/index';
 
 const useResizeObserver = (targetRef, cb, debounce = 0) => {
   let targetEl = null;
   let observer = null;
-  const size = { width: -1, height: -1 };
+  const size = ref({ width: -1, height: -1 });
   const { start: startTimer, stop: stopTimer } = useTimeout(emitEvent, debounce);
 
   function emitEvent() {
     stopTimer();
-    if (!targetEl || typeof cb !== 'function') return;
+    if (!targetEl) return;
     const { offsetWidth: width, offsetHeight: height } = targetEl;
 
-    if (width !== size.width || height !== size.height) {
-      size.width = width;
-      size.height = height;
-      cb(size);
-    }
+    if (width === size.value.width && height === size.value.height) return;
+
+    size.value.width = width;
+    size.value.height = height;
+    if (typeof cb === 'function') cb(size.value);
   }
 
   function trigger() {
@@ -48,6 +48,10 @@ const useResizeObserver = (targetRef, cb, debounce = 0) => {
     observer = null;
     targetEl = null;
   });
+
+  return {
+    size: computed(() => size.value),
+  };
 };
 
 export default useResizeObserver;

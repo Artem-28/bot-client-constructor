@@ -26,10 +26,26 @@
 import { nextTick, ref } from 'vue';
 import BaseIconBtn from 'components/base/base-icon-btn/base-icon-btn';
 
+// Props
+
+// Emits
+
+// Variables
+
+// Reactive variables
 const fieldRef = ref(null);
 const textMessage = ref('');
 const autogrow = ref(false);
 
+// Composition
+
+// Computed
+
+// Watch
+
+// Hooks
+
+// Methods
 function onFocus() {
   autogrow.value = true;
   nextTick(() => {
@@ -62,8 +78,6 @@ function sendMessage(e) {
   gap: 12px;
   justify-content: end;
   padding: 16px;
-  background-color: white;
-  border-left: 1px solid rgba(0, 0, 0, 0.12);
   &__field {
     min-height: 48px;
     width: 100%;

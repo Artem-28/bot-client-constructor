@@ -15,7 +15,7 @@
         flat
         unelevated
         square
-        class="width-control"
+        class="width-control separator"
         @click="toggleMini"
       >
         <q-icon
@@ -110,7 +110,6 @@ function isActive(item) {
   right: -18px;
   top: calc(50% - 20px);
   border-radius: 0 50% 50% 0;
-  border: 1px solid $border;
 }
 .app-drawer-item-wrap {
   padding: 0 17px;

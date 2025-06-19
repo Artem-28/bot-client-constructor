@@ -35,7 +35,7 @@ const messenger = inject(MessengerKey, {});
 messenger.loadMessengers();
 
 function clickItem(session) {
-  template.openDrawer();
+  template.openDrawer('left');
   messenger.setActiveGroup(session.script_id);
   messenger.loadSessions();
 }

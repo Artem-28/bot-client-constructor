@@ -1,5 +1,5 @@
 <template>
-  <button class="base-icon-btn">
+  <button :class="rootClasses">
     <div class="base-icon-btn__content">
       <q-icon v-if="icon" :name="icon" />
     </div>
@@ -7,11 +7,24 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue';
+import { hClasses } from 'src/helpers/h-classes.helper';
+
+const props = defineProps({
   icon: {
     type: String,
     required: false,
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const rootClasses = computed(() => {
+  const classes = hClasses('base-icon-btn');
+  if (props.active) classes.mixin().append('active');
+  return classes.value();
 });
 
 </script>
@@ -41,6 +54,11 @@ defineProps({
     .base-icon-btn__content {
       color: currentColor;
     }
+  }
+}
+.base-icon-btn--active {
+  .base-icon-btn__content {
+    color: currentColor !important;
   }
 }
 </style>
