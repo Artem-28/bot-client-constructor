@@ -155,7 +155,6 @@ watch(instance.initialized, () => {
 .base-drawer-container {
 }
 .base-drawer {
-  background-color: $bg-primary;
   position: absolute;
   top: 0;
   bottom: 0;

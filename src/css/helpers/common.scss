@@ -1,27 +1,8 @@
-.bg-color {
-  &--primary {
-    background-color: $primary;
-  }
-  &--secondary {
-    background-color: $bg-secondary;
-  }
-  &--white {
-    background-color: #FFFFFF;
-  }
-}
-.text-color--dark {
-  color: $text-dark;
-}
 .text-color--gray {
   color: $text-gray;
 }
-.text-color--primary {
-  color: $primary;
-}
-.text-color--white {
-  color: #FFFFFF;
-}
-.clickable-el {
+
+.clickable {
   position: relative;
   cursor: pointer;
   &:before {
@@ -33,10 +14,11 @@
     position: absolute;
     top: 0;
     left: 0;
+    opacity: 0.1;
   }
   &:hover {
     &:before {
-      background-color: $color-hover-primary;
+      background-color: var(--q-primary);
     }
   }
 }
@@ -53,17 +35,35 @@
 }
 
 .separator {
-  border: 1px solid $separator-primary-color;
+  $_color: var(--separator-color-primary);
+  border: 1px solid $_color;
   &--left {
-    border-left: 1px solid $separator-primary-color;
+    border-left: 1px solid $_color;
   }
   &--right {
-    border-right: 1px solid $separator-primary-color;
+    border-right: 1px solid $_color;
   }
   &--bottom {
-    border-bottom: 1px solid $separator-primary-color;
+    border-bottom: 1px solid $_color;
   }
   &--top {
-    border-top: 1px solid $separator-primary-color;
+    border-top: 1px solid $_color;
+  }
+}
+
+.separator-secondary {
+  $_color: var(--separator-color-secondary);
+  border: 1px solid $_color;
+  &--left {
+    border-left: 1px solid $_color;
+  }
+  &--right {
+    border-right: 1px solid $_color;
+  }
+  &--bottom {
+    border-bottom: 1px solid $_color;
+  }
+  &--top {
+    border-top: 1px solid $_color;
   }
 }

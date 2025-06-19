@@ -1,5 +1,5 @@
 <template>
-  <div class="base-table">
+  <div class="base-table bg-system--secondary">
     <div
       :style="itemStyle"
       class="base-table-header text--bold"
@@ -18,13 +18,13 @@
         :key="index"
         :clickable="clickable"
         :style="itemStyle"
-        class="base-table-item text-color--primary"
+        class="base-table-item text-color--primary bg-system--primary"
         @click="clickHandle(item)"
       >
         <div
           v-for="column in columns"
           :key="column.name"
-          class="base-table-item__cell text-color--dark"
+          class="base-table-item__cell text-color--primary"
         >
           <slot :name="`cell:${column.name}`" :item="item" :value="item[column.name]" >
             <span v-text="item[column.name] || ''" />
@@ -90,7 +90,6 @@ function clickHandle(item) {
 
 <style scoped lang="scss">
 .base-table {
-  background-color: $bg-secondary;
   border-radius: 8px;
   padding: 18px;
 }
@@ -108,7 +107,6 @@ function clickHandle(item) {
 .base-table-item {
   padding: 0;
   min-height: 40px;
-  background-color: $bg-primary;
   &__cell {
     display: flex;
     align-items: center;

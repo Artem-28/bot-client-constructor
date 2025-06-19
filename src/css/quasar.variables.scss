@@ -11,29 +11,71 @@
 // It's highly recommended to change the default colors
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
+:root {
+  --base-color-black: #000000;
+  --base-color-white: #FFFFFF;
+  --q-primary: #5541D7;
+  --q-secondary: #2D96EE;
+  --q-negative: #F04461;
+  --q-warning: #EEAF22;
+  --q-positive: #41DA7E;
+  --q-info: #F1F1F6;
 
-$secondary : #26A69A;
+  --primary-10: #DBD7F4;
+  --primary-30: #766EDA;
+  --primary: #5541D7;
+  --primary-70: #2A23C2;
+  --primary-90: #181485;
+
+  --bg-system-primary: #FFFFFF;
+  --bg-system-secondary: #F7F7FC;
+
+  --text-color-primary: #11142D;
+  --text-color-secondary: #9A9AB0;
+
+  --field-color: #FFFFFF;
+  --image-placeholder: #E2E2EA;
+
+  --separator-color-primary: #E1E1FB;
+  --separator-color-secondary: #E1E1E1;
+  --icon-color: #9A9AB0
+}
+
+[data-theme="dark"] {
+  --base-color-black: #000000;
+  --base-color-white: #FFFFFF;
+  --q-primary: #0D8BFF;
+  --q-secondary: #EE952D;
+  --q-negative: #F04461;
+  --q-warning: #EEAF22;
+  --q-positive: #41DA7E;
+  --q-info: #404557;
+
+  --primary-10: #001B33;
+  --primary-30: #005099;
+  --primary: #0D8BFF;
+  --primary-70: #66B6FF;
+  --primary-90: #CCE7FF;
+
+  --bg-system-primary: #1F1D2B;
+  --bg-system-secondary: #252836;
+
+  --text-color-primary: #FFFFFF;
+  --text-color-secondary: #9A9AB0;
+
+  --field-color: #21242E;
+  --image-placeholder: #2E354B;
+
+  --separator-color-primary: #3C4156;
+  --separator-color-secondary: #2E354B;
+  --icon-color: #9A9AB0
+}
+
 $accent    : #9C27B0;
 
-$dark      : #1D1D1D;
-$dark-page : #121212;
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
 
-$primary: #5541D7;
-$light-primary: #DBD7F4;
-$bg-primary: #FFFFFF;
-$bg-secondary: #F7F7FC;
-$fill-image: #E2E2EA;
 
-$separator-primary-color: rgba(0, 0, 0, 0.12);
-
-$text-dark: #11142D;
 $text-gray: #9A9AB0;
-
-$color-hover-primary: rgba(85, 65, 215, 0.1);
 
 $default-transition: 0.3s;

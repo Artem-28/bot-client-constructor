@@ -1,6 +1,6 @@
 <template>
-  <div ref="rootRef" class="messenger-template bg-color--secondary">
-    <base-section view="hhr Lpr ffr" class="bg-color--white">
+  <div ref="rootRef" class="messenger-template">
+    <base-section view="hhr Lpr ffr" class="bg-system--primary">
       <base-section-header>
         <slot name="left-header" />
       </base-section-header>
@@ -18,7 +18,7 @@
         overlay
         @hide="hideDrawer.left.accept"
       >
-        <base-section>
+        <base-section class="bg-system--primary">
           <base-section-header>
             <slot name="left-drawer-header" />
           </base-section-header>
@@ -33,7 +33,7 @@
     </base-section>
 
     <base-section view="hHr Lpr fFr">
-      <base-section-header class="bg-color--white">
+      <base-section-header class="bg-system--primary">
         <slot name="header" />
       </base-section-header>
 
@@ -46,9 +46,11 @@
         </div>
       </base-section-container>
 
-      <base-drawer v-model="drawer.right" side="right" />
+      <base-drawer v-model="drawer.right" side="right">
+        <base-section class="bg-system--primary" />
+      </base-drawer>
 
-      <base-section-footer class="bg-color--white">
+      <base-section-footer class="bg-system--primary">
         <slot name="footer" />
       </base-section-footer>
     </base-section>

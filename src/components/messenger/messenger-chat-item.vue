@@ -1,6 +1,6 @@
 <template>
   <div
-    class="messenger-chat-item clickable-el"
+    class="messenger-chat-item clickable"
     @click="clickItem"
   >
     <base-avatar :item="avatar" :size="54" />
@@ -8,7 +8,7 @@
       <div class="messenger-chat-item__title">
         <span
           v-if="title"
-          class="text--truncate text-color--dark text--md text--bold"
+          class="text--truncate text-color--primary text--md text--bold"
           v-text="title"
         />
 
@@ -18,17 +18,17 @@
         />
       </div>
 
-      <div class="text--truncate text-color--dark text--sm">
+      <div class="text--truncate text-color--primary text--sm">
         <span class="text--bold" v-text="$t('session.fields.id') + ':'" />
         <span v-text="` ${session.id}`" />
       </div>
 
       <div class="text--truncate text--sm">
         <span
-          class="text-color--primary text--bold"
+          class="color--primary text--bold"
           v-text="`#${respondent.id} ${authorName}: `"
         />
-        <span v-if="lastMessage" class="text-color--gray" v-text="lastMessage.text" />
+        <span v-if="lastMessage" class="text-color--secondary" v-text="lastMessage.text" />
       </div>
     </div>
   </div>

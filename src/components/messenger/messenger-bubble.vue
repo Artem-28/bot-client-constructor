@@ -107,7 +107,6 @@ function getAuthorName() {
     margin-right: auto;
   }
   &--respondent {
-    background-color: $bg-primary;
   }
 }
 

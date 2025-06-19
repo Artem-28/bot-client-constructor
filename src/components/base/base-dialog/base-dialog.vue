@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="modelDialog" persistent>
     <div class="base-dialog-wrap">
-      <div class="base-dialog">
+      <div class="base-dialog bg-system--primary">
         <slot name="icon">
           <q-icon v-if="icon" :name="icon" size="64px" color="primary" />
         </slot>
@@ -140,7 +140,6 @@ async function onCancel() {
   height: 100%;
   width: 100%;
   padding: 24px 16px;
-  background-color: $bg-primary;
   display: flex;
   flex-direction: column;
   gap: 32px;

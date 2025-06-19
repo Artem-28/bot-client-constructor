@@ -5,10 +5,10 @@
       :key="item.code"
       v-close-popup
       clickable
-      class="script-menu-item"
+      class="script-menu-item color--primary"
       @click="clickHandle(item.code)"
     >
-      <span v-text="$t(item.label)" class="script-menu-item__text" />
+      <span v-text="$t(item.label)" class="script-menu-item__text text-color--primary" />
     </q-item>
   </div>
 </template>
@@ -41,11 +41,9 @@ function clickHandle(code) {
 
 <style scoped lang="scss">
 .script-menu-item {
-  color: $primary;
   min-height: 40px;
   text-align: center;
   &__text {
-    color: $text-dark;
     font-size: 14px;
     text-align: center;
   }

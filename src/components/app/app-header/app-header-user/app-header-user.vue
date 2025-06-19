@@ -10,7 +10,7 @@
               v-for="item in userMenu"
               :key="item.code"
               v-close-popup
-              class="user-menu__item"
+              class="user-menu__item clickable"
               @click="clickItem(item)"
             >
               <q-icon :name="item.icon" color="primary" size="18px" />
@@ -19,7 +19,7 @@
           </div>
         </q-menu>
       </div>
-      <span v-text="user.email" class="text-color--gray text--sm" />
+      <span v-text="user.email" class="text-color--secondary text--sm" />
     </div>
   </div>
 </template>
@@ -97,9 +97,6 @@ async function clickItem(item) {
     gap: 12px;
     font-size: 14px;
     font-weight: 500;
-    &:hover {
-      background-color: $color-hover-primary;
-    }
   }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <q-layout class="main-layout">
+  <q-layout class="bg-system--secondary">
     <app-header />
     <app-drawer v-if="showDrawer" />
-    <q-page-container class="main-layout__page-container">
-      <div class="main-layout__page-content">
+    <q-page-container class="page-container">
+      <div class="page-content">
         <router-view />
       </div>
     </q-page-container>
@@ -43,13 +43,10 @@ onBeforeMount(() => (showDrawer.value = !route.meta?.root));
 </script>
 
 <style lang="scss" scoped>
-.main-layout {
-  background-color: $bg-secondary;
-  &__page-container {
-    height: 100vh;
-  }
-  &__page-content {
-    height: 100%;
-  }
+.page-container {
+  height: 100vh;
+}
+.page-content {
+  height: 100%;
 }
 </style>

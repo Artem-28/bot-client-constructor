@@ -1,6 +1,6 @@
 <template>
-  <div class="project-card clickable-el" @click="clickHandle">
-    <div class="project-card__preview"></div>
+  <div class="project-card clickable" @click="clickHandle">
+    <div class="project-card__preview bg--image-placeholder"></div>
     <span v-text="project.title" class="text--md text--bold q-my-auto" />
   </div>
 </template>
@@ -44,7 +44,7 @@ function clickHandle() {
   justify-content: space-between;
   aspect-ratio: 1/1;
   padding: 8px;
-  border: 1px solid $light-primary;
+  border: 1px solid var(--separator-color-primary);
   border-radius: 8px;
   transition: $default-transition;
   &:hover {
@@ -54,7 +54,6 @@ function clickHandle() {
     aspect-ratio: 4/3;
     width: 100%;
     border-radius: inherit;
-    background-color: $fill-image;
   }
 }
 </style>

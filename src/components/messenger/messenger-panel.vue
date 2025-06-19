@@ -81,7 +81,6 @@ function sendMessage(e) {
   &__field {
     min-height: 48px;
     width: 100%;
-    background: #F6F6F7;
     padding: 0 8px;
   }
   &__action {

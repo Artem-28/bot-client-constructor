@@ -7,7 +7,7 @@
     :width="260"
     :breakpoint="0"
     bordered
-    class="app-drawer"
+    class="app-drawer bg-system--primary"
   >
     <q-list class="app-drawer-list" >
       <q-btn
@@ -15,7 +15,7 @@
         flat
         unelevated
         square
-        class="width-control separator"
+        class="width-control bg-system--primary separator-secondary"
         @click="toggleMini"
       >
         <q-icon
@@ -38,13 +38,13 @@
             <q-icon
               :name="item.icon"
               size="22px"
-              class="app-drawer-item__icon text-color--primary"
+              class="app-drawer-item__icon color--icon"
             />
           </q-item-section>
           <q-item-section class="app-drawer-item__section">
             <span
               v-text="$t(item.label)"
-              class="app-drawer-item__text text-color--dark text--bold" />
+              class="app-drawer-item__text text-color--primary text--bold" />
           </q-item-section>
         </q-item>
 
@@ -100,7 +100,6 @@ function isActive(item) {
 <style scoped lang="scss">
 .width-control {
   position: absolute;
-  background-color: #FFFFFF;
   padding: 0;
   z-index: 9999;
   display: flex;
@@ -123,7 +122,7 @@ function isActive(item) {
   display: flex;
   padding: 0 9px;
   border-radius: 8px;
-  color: $primary;
+  color: var(--q-primary);
   gap: 14px;
   &__section {
     padding: 0;
@@ -131,13 +130,13 @@ function isActive(item) {
     min-width: auto;
   }
   &--active {
-    background-color: $primary;
-    color: #FFFFFF;
+    background-color: var(--q-primary);
+    color: var(--base-color-white);
     .app-drawer-item__icon {
-      color: #FFFFFF;
+      color: var(--base-color-white);
     }
     .app-drawer-item__text {
-      color: #FFFFFF;
+      color: var(--base-color-white);
     }
   }
 }

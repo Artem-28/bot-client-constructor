@@ -1,0 +1,20 @@
+.q-field__control {
+  background-color: var(--field-color);
+}
+.q-field__native {
+  color: var(--text-color-secondary);
+}
+.q-field__marginal {
+  color: var(--text-color-secondary);
+}
+.q-field--outlined .q-field__control {
+  border-radius: 8px;
+}
+
+.q-field--outlined .q-field__control:before {
+  border: 1px solid var(--separator-color-primary);
+}
+
+.q-field--outlined .q-field__control:hover:before {
+  border: 1px solid var(--q-primary);
+}

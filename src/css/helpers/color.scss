@@ -1,0 +1,40 @@
+.bg-system {
+  &--primary {
+    background-color: var(--bg-system-primary);
+  }
+  &--secondary {
+    background-color: var(--bg-system-secondary);
+  }
+}
+.bg {
+  &--image-placeholder {
+    background-color: var(--image-placeholder);
+  }
+}
+
+.bg-color {
+  &--primary {
+    background-color: var(--q-primary);
+  }
+}
+
+.color {
+  &--primary {
+    color: var(--q-primary);
+  }
+  &--white {
+    color: var(--base-color-white);
+  }
+  &--icon {
+    color: var(--icon-color);
+  }
+}
+
+.text-color {
+  &--primary {
+    color: var(--text-color-primary);
+  }
+  &--secondary {
+    color: var(--text-color-secondary);
+  }
+}
