@@ -2,10 +2,10 @@
   <header class="messenger-session-header">
     <base-icon-btn
       icon="arrow_back"
-      class="font-24"
+      class="text--xxl"
       @click="backHandler"
     />
-    <span class="text-truncate font-16 text-bold" v-if="title" v-text="title" />
+    <span class="text--truncate text--md text--bold" v-if="title" v-text="title" />
   </header>
 </template>
 

@@ -44,7 +44,7 @@
           <q-item-section class="app-drawer-item__section">
             <span
               v-text="$t(item.label)"
-              class="app-drawer-item__text text-color--dark text-bold" />
+              class="app-drawer-item__text text-color--dark text--bold" />
           </q-item-section>
         </q-item>
 

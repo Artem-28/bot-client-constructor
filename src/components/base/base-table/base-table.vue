@@ -2,7 +2,7 @@
   <div class="base-table">
     <div
       :style="itemStyle"
-      class="base-table-header text-bold"
+      class="base-table-header text--bold"
     >
       <div
         v-for="column in columns"

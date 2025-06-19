@@ -3,7 +3,7 @@
     <base-avatar :item="user" title-key="name" rounded />
     <div class="user-info">
       <div class="cursor-pointer">
-        <span v-text="user.name" class="text-bold" />
+        <span v-text="user.name" class="text--bold" />
         <q-menu :offset="[0, 34]">
           <div class="user-menu">
             <div
@@ -19,7 +19,7 @@
           </div>
         </q-menu>
       </div>
-      <span v-text="user.email" class="text-color--gray font-14" />
+      <span v-text="user.email" class="text-color--gray text--sm" />
     </div>
   </div>
 </template>

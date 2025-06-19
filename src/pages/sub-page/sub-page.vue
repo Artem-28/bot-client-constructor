@@ -12,7 +12,7 @@
         :key="tab.name"
         :name="tab.name"
         no-caps
-        class="sub-page-tabs__tab font-16 text-bold text-color--gray"
+        class="sub-page-tabs__tab text--md text--bold text-color--gray"
       >
         <span v-text="$t(tab.label)" />
       </q-tab>

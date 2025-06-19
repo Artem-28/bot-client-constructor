@@ -35,12 +35,12 @@
         unelevated
         no-caps
         :loading="loading"
-        class="login-page__submit text-bold full-width"
+        class="login-page__submit text--bold full-width"
       />
     </base-form>
     <div class="login-page__sign_up text-color--gray">
       <span v-text="$t('page.login.not_account')" />
-      <router-link to="/sign_up" class="text-bold text-color--primary">
+      <router-link to="/sign_up" class="text--bold text-color--primary">
         <span v-text="$t('button.sign_up')" />
       </router-link>
     </div>

@@ -27,7 +27,7 @@
     >
 
       <template v-slot:default="{ item }">
-        <pre>{{ item }}</pre>
+        <messenger-bubble :message="item" />
       </template>
 
     </messenger-bubbles-group>
@@ -51,6 +51,7 @@ import MessengerPanel from 'components/messenger/messenger-panel';
 import MessengerGroupHeader from 'components/messenger/messenger-group-header';
 import MessengerBubblesGroup from 'components/messenger/messenger-bubbles-group';
 import MessengerHeader from 'components/messenger/messenger-header';
+import MessengerBubble from 'components/messenger/messenger-bubble';
 // Props
 
 // Emits

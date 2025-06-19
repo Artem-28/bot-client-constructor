@@ -4,7 +4,7 @@
     <span
       v-else
       v-text="abbreviation"
-      class="text-uppercase text-bold text-color--white"
+      class="text-uppercase text--bold text-color--white"
       :style="abbreviationStyle"
     />
   </div>

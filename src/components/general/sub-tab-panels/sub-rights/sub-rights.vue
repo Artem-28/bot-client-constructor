@@ -8,7 +8,7 @@
           unelevated
           no-caps
           :loading="loading.save"
-          class="text-bold font-16"
+          class="text--bold text--md"
           @click="savePermissions"
         />
       </template>

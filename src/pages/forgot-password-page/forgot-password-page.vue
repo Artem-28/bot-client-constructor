@@ -21,13 +21,13 @@
           unelevated
           no-caps
           :loading="loading"
-          class="forgot-password-page__submit text-bold full-width"
+          class="forgot-password-page__submit text--bold full-width"
         />
       </base-form>
     </div>
     <div v-else class="forgot-password-page__sent-desc text-color--gray">
       <span v-text="$t('page.forgot_password.sent_desc')" />
-      <span v-text="` ${form.email}`" class="text-color--primary text-bold" />
+      <span v-text="` ${form.email}`" class="text-color--primary text--bold" />
     </div>
   </div>
 </template>

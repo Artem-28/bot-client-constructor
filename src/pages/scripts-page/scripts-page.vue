@@ -19,7 +19,7 @@
           color="primary"
           unelevated
           no-caps
-          class="text-bold font-16"
+          class="text--bold text--md"
           @click="showDialog"
         />
       </template>

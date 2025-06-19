@@ -7,7 +7,7 @@
         </slot>
 
         <slot name="title">
-          <span v-if="title" v-text="title" class="font-22 text-bold text-center" />
+          <span v-if="title" v-text="title" class="text--xl text--bold text-center" />
         </slot>
 
         <slot :data="confirm?.data?.value" />

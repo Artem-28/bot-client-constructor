@@ -30,7 +30,7 @@
         unelevated
         no-caps
         :loading="loading"
-        class="reset-password-page__submit text-bold full-width"
+        class="reset-password-page__submit text--bold full-width"
       />
     </base-form>
   </div>

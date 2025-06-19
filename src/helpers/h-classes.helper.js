@@ -1,17 +1,17 @@
 export function hClasses(rootClass) {
   const classes = [rootClass];
 
-  const append = (cls) => {
+  function append(cls) {
     classes.push(cls);
 
     return this;
-  };
+  }
 
-  const mixin = () => {
+  function mixin() {
     return {
-      append: (cls) => append(`${rootClass}--${cls}`),
+      append: (cls) => append.bind(this)(`${rootClass}--${cls}`),
     };
-  };
+  }
 
   return {
     value: () => classes.join(' '),

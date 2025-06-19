@@ -1,17 +1,17 @@
 import useApi from 'src/api';
-import { useProjectStore } from 'src/stores';
+import { useAuthStore, useProjectStore } from 'src/stores';
 import { computed, ref } from 'vue';
 import moment from 'moment';
 
 export const useMessenger = () => {
   const api = useApi();
   const { project } = useProjectStore();
+  const { user } = useAuthStore();
 
   const groupMap = ref(new Map());
   const sessionMap = ref(new Map());
   const respondentMap = ref(new Map());
   const sessionMessageGroupMap = ref(new Map());
-  const sessionMessagesMap = ref(new Map());
   const operatorMap = ref(new Map());
 
   const active = ref({
@@ -53,6 +53,10 @@ export const useMessenger = () => {
 
   function getOperator(id) {
     return computed(() => operatorMap.value.get(id));
+  }
+
+  function getSession(id) {
+    return computed(() => sessionMap.value.get(id));
   }
 
   function getSessions(groupId) {
@@ -106,6 +110,7 @@ export const useMessenger = () => {
 
   function setMessage(data) {
     const { operator, ...message } = data;
+    message.outgoing = message.operator_id === user.id;
 
     if (operator) {
       operatorMap.value.set(operator.id, operator);
@@ -127,11 +132,14 @@ export const useMessenger = () => {
     groups.get(groupKey).messages.push(message);
   }
 
+  function clearMessages(sessionId) {
+    sessionMessageGroupMap.value.delete(sessionId);
+  }
+
   function setSession(data) {
     const { respondent, messages, ...session } = data;
     sessionMap.value.set(session.id, session);
     respondentMap.value.set(respondent.id, respondent);
-    sessionMessagesMap.value.delete(session.id);
     messages.forEach(message => setMessage(message));
   }
 
@@ -168,6 +176,7 @@ export const useMessenger = () => {
         sessionId: activeSession.value.id,
       });
       if (!success) return;
+      clearMessages(activeSession.value.id);
       data.forEach(item => setMessage(item));
     } catch (e) { /* Empty */ }
   }
@@ -181,6 +190,7 @@ export const useMessenger = () => {
     loadMessengers,
     loadSessions,
     getSessions,
+    getSession,
     getRespondent,
     getLastMessage,
     getOperator,

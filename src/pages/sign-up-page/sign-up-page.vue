@@ -54,7 +54,7 @@
         <q-tab-panel :name="2" class="sign-up-page__tab">
           <div class="sign-up-page__confirm-message text-color--gray">
             <span v-text="$t('page.sign_up.code_sent')" />
-            <span v-text="` ${form.email}`" class="text-color--primary text-bold" />
+            <span v-text="` ${form.email}`" class="text-color--primary text--bold" />
           </div>
           <base-form-input
             v-model="form.code"
@@ -65,7 +65,7 @@
           />
           <div v-if="running" class="sign-up-page__timer">
             <span v-text="$t('page.sign_up.timer_desc')" />
-            <span v-text="time" class="text-color--primary text-bold" />
+            <span v-text="time" class="text-color--primary text--bold" />
           </div>
           <q-btn
             v-else
@@ -76,7 +76,7 @@
             unelevated
             no-caps
             :loading="loading"
-            class="text-bold"
+            class="text--bold"
             @click="sendConfirmMessage"
           />
         </q-tab-panel>
@@ -109,13 +109,13 @@
         unelevated
         :loading="loading"
         no-caps
-        class="sign-up-page__submit text-bold full-width"
+        class="sign-up-page__submit text--bold full-width"
       />
     </base-form>
 
     <div v-if="!canBack" class="sign-up-page__login text-color--gray">
       <span v-text="$t('page.sign_up.have_account')" />
-      <router-link to="/login" class="text-bold text-color--primary">
+      <router-link to="/login" class="text--bold text-color--primary">
         <span v-text="$t('button.sign_in')" />
       </router-link>
     </div>

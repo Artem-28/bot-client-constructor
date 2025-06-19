@@ -8,30 +8,25 @@
       <div class="messenger-chat-item__title">
         <span
           v-if="title"
-          class="text-truncate text-color--dark font-16 text-bold"
+          class="text--truncate text-color--dark text--md text--bold"
           v-text="title"
         />
 
         <span
-          class="messenger-chat-item__date font-14 text-color--gray"
+          class="messenger-chat-item__date text--sm text-color--gray"
           v-text="displayDate"
         />
       </div>
 
-      <div v-if="groupName" class="text-truncate text-color--dark font-14">
-        <span class="text-bold" v-text="`# ${respondent.id} `" />
-        <span v-text="respondentName" />
+      <div class="text--truncate text-color--dark text--sm">
+        <span class="text--bold" v-text="$t('session.fields.id') + ':'" />
+        <span v-text="` ${session.id}`" />
       </div>
 
-      <div v-else class="text-truncate text-color--dark font-14">
-        <span v-text="$t('respondent.fields.respondent_id')" />:
-        <span class="text-bold" v-text="` ${respondent.id}`" />
-      </div>
-
-      <div class="text-truncate font-14">
+      <div class="text--truncate text--sm">
         <span
-          class="text-color--primary text-bold"
-          v-text="`${authorName}: `"
+          class="text-color--primary text--bold"
+          v-text="`#${respondent.id} ${authorName}: `"
         />
         <span v-if="lastMessage" class="text-color--gray" v-text="lastMessage.text" />
       </div>

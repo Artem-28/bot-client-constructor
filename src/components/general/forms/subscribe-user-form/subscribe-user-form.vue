@@ -21,7 +21,7 @@
         unelevated
         no-caps
         :loading="loading"
-        class="text-bold full-width"
+        class="text--bold full-width"
       />
       <q-btn
         v-close-popup
@@ -30,7 +30,7 @@
         outline
         unelevated
         no-caps
-        class="text-bold full-width"
+        class="text--bold full-width"
       />
     </div>
   </base-form>

@@ -1,7 +1,7 @@
 <template>
   <div class="project-card clickable-el" @click="clickHandle">
     <div class="project-card__preview"></div>
-    <span v-text="project.title" class="font-16 text-bold q-my-auto" />
+    <span v-text="project.title" class="text--md text--bold q-my-auto" />
   </div>
 </template>
 

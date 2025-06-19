@@ -1,7 +1,9 @@
 <template>
   <div ref="containerRef" class="messenger-bubbles-group">
     <div ref="headerRef" :class="headerClasses">
-      <pre>{{ group.date }}</pre>
+      <q-badge class="bg-color--primary text--sm" rounded>
+        <span v-text="displayDate" />
+      </q-badge>
     </div>
     <div class="messenger-bubbles-group__content">
       <template v-for="n in count" :key="group.messages[ count - n].id">
@@ -15,6 +17,7 @@
 import { computed, inject, onMounted, ref, watch } from 'vue';
 import { MessengerTemplateKey } from 'src/utils/symbols.util';
 import { useTimeout } from 'src/composable';
+import { useI18n } from 'vue-i18n';
 
 // Props
 const props = defineProps({
@@ -26,8 +29,11 @@ const props = defineProps({
 // Emits
 
 // Variables
-
+const i18n = useI18n();
 const template = inject(MessengerTemplateKey, {});
+const monthIndex = props.group.date.getMonth();
+const month = i18n.t(`months.genitive.${monthIndex}`);
+const displayDate = `${props.group.date.getDate()} ${month}`;
 
 // Reactive variables
 const containerRef = ref(null);
@@ -36,7 +42,7 @@ const outsideHeader = ref(false);
 const touch = ref(false);
 
 // Composition
-const { restart } = useTimeout(updateVisibleHeader, 1000);
+const { restart } = useTimeout(updateVisibleHeader, 2000);
 
 // Computed
 const count = computed(() => props.group.messages.length);

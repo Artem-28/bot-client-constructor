@@ -1,6 +1,6 @@
 <template>
   <header class="app-page-header">
-    <h1 class="font-24 q-ma-none text-bold">
+    <h1 class="text--xxl q-ma-none text--bold">
       <slot name="title">
         <span v-text="title"  />
       </slot>
